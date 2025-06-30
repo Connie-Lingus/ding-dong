@@ -2,9 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ding-dong.io</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Booth Company Real Estate: Save money selling your home with our efficient, client-focused services.">
+    <meta name="keywords" content="real estate, sell home, save money, Booth Company Real Estate">
+    <title>Booth Company Real Estate</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Copperplate&display=swap" rel="stylesheet">
 </head>
 <body>
-    <p>Hello, this is my placeholder page!</p>
+    <header>
+        <div class="container">
+            <h1>Booth Company Real Estate</h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="intro">
+        <div class="container">
+            <h2>Welcome to Booth Company Real Estate</h2>
+            <p>At Booth Company Real Estate, we make selling your home simple and cost-effective. Our streamlined process cuts out unnecessary fees, saving you thousands while ensuring a smooth, professional sale. With our personalized service and the signature *ding-dong* of success, we’re here to help you move forward.</p>
+            <a href="#contact" class="btn">Get a Free Consultation</a>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Let’s Connect</h2>
+            <p>Interested in saving money on your home sale? Fill out the form below, and we’ll reach out to discuss how we can help.</p>
+            <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone">
+                
+                <label for="message">Tell Us About Your Property</label>
+                <textarea id="message" name="message" rows="5"></textarea>
+                
+                <button type="submit" class="btn">Submit</button>
+            </form>
+            <p id="form-message"></p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Booth Company Real Estate. All rights reserved.</p>
+            <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a> | Phone: (123) 456-7890</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
