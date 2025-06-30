@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Copperplate', 'Papyrus', fantasy; /* Fallbacks in case Copperplate isn't available */
+    line-height: 1.6;
+    color: #1a5841; /* Dark green */
+    background: #ffffff; /* White */
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header {
+    background: #07402b; /* Darker green */
+    color: #ffffff; /* White */
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    font-size: 28px;
+    float: left;
+    color: #d5bf72; /* Gold */
+}
+
+nav ul {
+    float: right;
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff; /* White */
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    color: #d5bf72; /* Gold */
+}
+
+.intro {
+    background: #f5f5f5; /* Light gray for contrast */
+    padding: 100px 0 60px;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.intro h2 {
+    font-size: 32px;
+    color: #07402b; /* Darker green */
+    margin-bottom: 20px;
+}
+
+.intro p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #1a5841; /* Dark green */
+    color: #ffffff; /* White */
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background: #d5bf72; /* Gold */
+    color: #07402b; /* Darker green */
+}
+
+#contact {
+    padding: 60px 0;
+    text-align: center;
+    background: #ffffff; /* White */
+}
+
+#contact h2 {
+    font-size: 28px;
+    color: #07402b; /* Darker green */
+    margin-bottom: 20px;
+}
+
+#contact p {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+#contact form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+#contact label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #1a5841; /* Dark green */
+}
+
+#contact input, #contact textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #1a5841; /* Dark green */
+    border-radius: 5px;
+    font-family: Arial, sans-serif; /* Fallback for form inputs */
+}
+
+#contact textarea {
+    resize: vertical;
+}
+
+#form-message {
+    margin-top: 10px;
+    color: #d5bf72; /* Gold */
+}
+
+footer {
+    background: #07402b; /* Darker green */
+    color: #ffffff; /* White */
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer p {
+    font-size: 14px;
+}
+
+footer a {
+    color: #d5bf72; /* Gold */
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1, nav ul {
+        float: none;
+        text-align: center;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .intro h2 {
+        font-size: 24px;
+    }
+
+    .intro p {
+        font-size: 16px;
+    }
+
+    #contact h2 {
+        font-size: 22px;
+    }
+}
