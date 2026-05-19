@@ -8,93 +8,98 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; }
-    .step { display: none; }
-    .step.active { display: block; }
+    .section { scroll-margin-top: 80px; }
     .topping-card { transition: all 0.2s; }
     .topping-card.active { border-color: #dc2626; background-color: #fee2e2; }
+    .price-float { position: sticky; top: 0; z-index: 50; }
   </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 pb-24">
 
   <!-- Password Screen -->
   <div id="password-screen" class="fixed inset-0 bg-black flex items-center justify-center z-50">
     <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-xs w-full mx-4 text-center">
-      <h1 class="text-4xl mb-2">🍕</h1>
-      <h2 class="text-2xl font-bold mb-6">Hometown Pizza</h2>
-      <h3 class="text-xl text-gray-600 mb-6">Test App</h3>
-      <input type="password" id="password-input" class="w-full px-5 py-4 border rounded-2xl text-center text-lg mb-4" placeholder="Enter test password">
-      <button onclick="checkPassword()" class="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-semibold text-lg">Enter Test App</button>
+      <h1 class="text-5xl mb-3">🍕</h1>
+      <h2 class="text-3xl font-bold mb-2">Hometown Pizza</h2>
+      <h3 class="text-xl text-gray-600">Test App</h3>
+      <input type="password" id="password-input" class="w-full px-5 py-4 border rounded-2xl text-center text-lg my-6" placeholder="Enter test password">
+      <button onclick="checkPassword()" class="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-semibold text-lg">Start Ordering</button>
     </div>
   </div>
 
   <!-- Main App -->
   <div id="main-app" class="hidden max-w-md mx-auto bg-white min-h-screen">
 
-    <!-- Header -->
-    <div class="bg-red-600 text-white p-5 sticky top-0 z-10">
+    <!-- Floating Price Header -->
+    <div class="price-float bg-white border-b shadow-sm px-5 py-4">
       <div class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold">Hometown Pizza</h1>
+        <h1 class="text-2xl font-bold">Build Your Own</h1>
         <div class="text-right">
-          <div id="total-price" class="text-lg font-bold">$14.95</div>
-          <div class="text-xs text-red-100">Large • Build Your Own</div>
+          <div id="total-price" class="text-2xl font-bold text-red-600">$18.95</div>
+          <div class="text-xs text-gray-500">Large • Original</div>
         </div>
       </div>
     </div>
 
-    <div class="p-5">
-      <h2 class="text-2xl font-bold mb-6">Build Your Own Pizza</h2>
+    <div class="p-5 space-y-10">
 
-      <!-- Progress -->
-      <div class="flex justify-between text-xs mb-6 text-gray-500">
-        <div onclick="goToStep(1)" class="cursor-pointer" id="step1-tab">1. Size</div>
-        <div onclick="goToStep(2)" class="cursor-pointer" id="step2-tab">2. Crust</div>
-        <div onclick="goToStep(3)" class="cursor-pointer" id="step3-tab">3. Toppings</div>
-      </div>
-
-      <!-- Step 1: Size -->
-      <div id="step-1" class="step active">
-        <h3 class="font-semibold mb-4">1. Choose Size</h3>
-        <div class="grid grid-cols-2 gap-3">
-          <div onclick="selectSize(this, 14.95)" class="pizza-option border-2 border-gray-300 rounded-2xl p-5 text-center cursor-pointer">
-            <p class="font-bold">Medium</p>
-            <p class="text-2xl font-semibold">$14.95</p>
+      <!-- Size -->
+      <div class="section">
+        <h3 class="font-bold text-lg mb-4">1. Size</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div onclick="selectSize(this, 14.95, 'Medium')" class="pizza-option border-2 border-gray-300 rounded-3xl p-6 text-center cursor-pointer">
+            <p class="font-bold text-xl">Medium</p>
+            <p class="text-3xl font-semibold mt-1">$14.95</p>
           </div>
-          <div onclick="selectSize(this, 18.95)" class="pizza-option border-2 border-red-500 rounded-2xl p-5 text-center cursor-pointer active">
-            <p class="font-bold">Large <span class="text-red-600">(Most Popular)</span></p>
-            <p class="text-2xl font-semibold">$18.95</p>
+          <div onclick="selectSize(this, 18.95, 'Large')" class="pizza-option border-2 border-red-500 rounded-3xl p-6 text-center cursor-pointer active">
+            <p class="font-bold text-xl">Large <span class="text-red-500 text-base">(Popular)</span></p>
+            <p class="text-3xl font-semibold mt-1">$18.95</p>
           </div>
         </div>
       </div>
 
-      <!-- Step 2: Crust -->
-      <div id="step-2" class="step">
-        <h3 class="font-semibold mb-4">2. Choose Crust</h3>
-        <div class="space-y-3">
-          <div onclick="selectCrust(this, 'Original')" class="pizza-option border-2 border-gray-300 rounded-2xl p-5 cursor-pointer">Original Hand-Tossed</div>
-          <div onclick="selectCrust(this, 'Thin')" class="pizza-option border-2 border-gray-300 rounded-2xl p-5 cursor-pointer">Thin & Crispy</div>
+      <!-- Crust -->
+      <div class="section">
+        <h3 class="font-bold text-lg mb-4">2. Crust</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div onclick="selectCrust(this, 'Original')" class="pizza-option border-2 border-red-500 rounded-3xl p-6 text-center cursor-pointer active">
+            <p class="font-bold">Original Hand-Tossed</p>
+          </div>
+          <div onclick="selectCrust(this, 'Thin')" class="pizza-option border-2 border-gray-300 rounded-3xl p-6 text-center cursor-pointer">
+            <p class="font-bold">Thin & Crispy</p>
+          </div>
         </div>
       </div>
 
-      <!-- Step 3: Toppings -->
-      <div id="step-3" class="step">
-        <h3 class="font-semibold mb-4">3. Add Toppings</h3>
-        <p class="text-sm text-gray-600 mb-4">Tap to add • Tap again for Extra</p>
+      <!-- Sauce & Cheese (Defaults for now) -->
+      <div class="section">
+        <h3 class="font-bold text-lg mb-4">3. Sauce & Cheese</h3>
+        <p class="text-gray-500 text-sm mb-4">We'll use our classic marinara + mozzarella unless you tell us otherwise later.</p>
+      </div>
+
+      <!-- Toppings -->
+      <div class="section">
+        <h3 class="font-bold text-lg mb-4">4. Toppings</h3>
+        <p class="text-sm text-gray-600 mb-4">Tap once to add • Tap again for Extra</p>
         <div id="toppings-list" class="grid grid-cols-2 gap-3">
-          <!-- Toppings will be populated by JS -->
+          <!-- Populated by JavaScript -->
         </div>
       </div>
+
     </div>
 
-    <!-- Bottom Navigation -->
-    <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t p-4 flex gap-3">
-      <button onclick="prevStep()" class="flex-1 py-4 border border-gray-300 rounded-2xl font-semibold">Back</button>
-      <button onclick="nextStep()" id="next-btn" class="flex-1 py-4 bg-red-600 text-white rounded-2xl font-semibold">Next</button>
+    <!-- Bottom Bar -->
+    <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t p-4">
+      <button onclick="addToCart()" 
+              class="w-full bg-red-600 text-white py-5 rounded-2xl font-bold text-lg shadow-lg">
+        Add to Cart — $<span id="bottom-price">18.95</span>
+      </button>
     </div>
   </div>
 
   <script>
     const CORRECT_PASSWORD = "pizza2026";
-    let currentStep = 1;
+
     let order = {
       size: "Large",
       sizePrice: 18.95,
@@ -104,10 +109,10 @@
 
     const toppingsData = [
       {name: "Pepperoni", price: 2.50},
-      {name: "Sausage", price: 2.50},
+      {name: "Italian Sausage", price: 2.50},
       {name: "Mushrooms", price: 1.75},
       {name: "Onions", price: 1.50},
-      {name: "Bell Peppers", price: 1.75},
+      {name: "Green Peppers", price: 1.75},
       {name: "Black Olives", price: 1.75},
       {name: "Bacon", price: 2.75},
       {name: "Ham", price: 2.50},
@@ -128,21 +133,25 @@
     function renderToppings() {
       const container = document.getElementById("toppings-list");
       container.innerHTML = "";
-      toppingsData.forEach((topping, index) => {
+      
+      toppingsData.forEach((topping, i) => {
         const div = document.createElement("div");
-        div.className = "topping-card border-2 border-gray-300 rounded-2xl p-4 text-center cursor-pointer";
-        div.innerHTML = `<p class="font-medium">${topping.name}</p><p class="text-sm text-gray-500">+$${topping.price.toFixed(2)}</p>`;
-        div.onclick = () => toggleTopping(index, div);
+        div.className = "topping-card border-2 border-gray-300 rounded-3xl p-4 text-center cursor-pointer";
+        div.innerHTML = `
+          <p class="font-medium">${topping.name}</p>
+          <p class="text-sm text-gray-500">+$${topping.price.toFixed(2)}</p>
+        `;
+        div.onclick = () => toggleTopping(i, div);
         container.appendChild(div);
       });
     }
 
     function toggleTopping(index, element) {
       const topping = toppingsData[index];
-      const existing = order.toppings.findIndex(t => t.name === topping.name);
+      const exists = order.toppings.findIndex(t => t.name === topping.name);
       
-      if (existing > -1) {
-        order.toppings.splice(existing, 1);
+      if (exists > -1) {
+        order.toppings.splice(exists, 1);
         element.classList.remove("active");
       } else {
         order.toppings.push(topping);
@@ -151,48 +160,35 @@
       updatePrice();
     }
 
-    function updatePrice() {
-      let total = order.sizePrice;
-      order.toppings.forEach(t => total += t.price);
-      document.getElementById("total-price").textContent = "$" + total.toFixed(2);
-    }
-
-    function selectSize(el, price) {
+    function selectSize(el, price, sizeName) {
       document.querySelectorAll('.pizza-option').forEach(e => e.classList.remove('active'));
       el.classList.add('active');
+      order.size = sizeName;
       order.sizePrice = price;
       updatePrice();
     }
 
     function selectCrust(el, crustName) {
-      document.querySelectorAll('#step-2 .pizza-option').forEach(e => e.classList.remove('active'));
+      document.querySelectorAll('#step-2 .pizza-option, .pizza-option').forEach(e => e.classList.remove('active'));
       el.classList.add('active');
       order.crust = crustName;
     }
 
-    function goToStep(step) {
-      currentStep = step;
-      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-      document.getElementById(`step-${step}`).classList.add('active');
+    function updatePrice() {
+      let total = order.sizePrice;
+      order.toppings.forEach(t => total += t.price);
+      
+      const formatted = total.toFixed(2);
+      document.getElementById("total-price").textContent = "$" + formatted;
+      document.getElementById("bottom-price").textContent = formatted;
     }
 
-    function nextStep() {
-      if (currentStep < 3) {
-        currentStep++;
-        goToStep(currentStep);
-      } else {
-        alert("Order Summary coming soon!\n\nTotal: " + document.getElementById("total-price").textContent);
-      }
+    function addToCart() {
+      const total = document.getElementById("total-price").textContent;
+      alert(`✅ Added to Cart!\n\n${order.size} ${order.crust} Pizza\nToppings: ${order.toppings.length}\nTotal: ${total}\n\n(Next: Cart & Checkout screen)`);
     }
 
-    function prevStep() {
-      if (currentStep > 1) {
-        currentStep--;
-        goToStep(currentStep);
-      }
-    }
-
-    // Enter key
+    // Enter key support
     document.getElementById("password-input").addEventListener("keypress", (e) => {
       if (e.key === "Enter") checkPassword();
     });
