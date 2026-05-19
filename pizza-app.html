@@ -2,196 +2,893 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🍕 Hometown Pizza - Build Your Own</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1A1410">
+  <title>Hometown Pizza</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; }
-    .section { scroll-margin-top: 80px; }
-    .topping-card { transition: all 0.2s; }
-    .topping-card.active { border-color: #dc2626; background-color: #fee2e2; }
-    .price-float { position: sticky; top: 0; z-index: 50; }
+    :root {
+      --red: #C8311A;
+      --red-light: #FAECE7;
+      --red-dark: #7A1D0E;
+      --cream: #FDF8F3;
+      --dark: #1A1410;
+      --border: #E8DDD6;
+      --muted: #9A8E88;
+      --text: #1A1410;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      height: 100%;
+      overscroll-behavior: none;
+      background: var(--dark);
+    }
+
+    body {
+      font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── FULL SCREEN WRAPPER ── */
+    #app {
+      position: fixed;
+      inset: 0;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── PASSWORD SCREEN ── */
+    #pw-screen {
+      position: absolute;
+      inset: 0;
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 40px 32px;
+      padding-top: calc(40px + var(--safe-top));
+      z-index: 200;
+    }
+
+    .pw-pizza-icon {
+      font-size: 52px;
+      margin-bottom: 20px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.07); }
+    }
+
+    .pw-logo {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1.5px;
+      line-height: 1;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .pw-tagline {
+      font-size: 12px;
+      color: #555;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+
+    .pw-input-wrap { width: 100%; margin-bottom: 12px; }
+
+    .pw-input {
+      width: 100%;
+      padding: 18px 20px;
+      border-radius: 14px;
+      border: 1.5px solid #252525;
+      background: #111;
+      color: #fff;
+      font-size: 17px;
+      text-align: center;
+      outline: none;
+      font-family: inherit;
+      letter-spacing: 3px;
+      transition: border-color 0.2s;
+    }
+    .pw-input::placeholder { letter-spacing: 0.5px; color: #444; }
+    .pw-input:focus { border-color: var(--red); }
+
+    .pw-err { font-size: 13px; color: #F09575; min-height: 18px; text-align: center; margin-bottom: 12px; }
+
+    .pw-btn {
+      width: 100%;
+      padding: 18px;
+      border-radius: 14px;
+      background: var(--red);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.3px;
+      transition: background 0.15s, transform 0.1s;
+      -webkit-appearance: none;
+    }
+    .pw-btn:active { background: var(--red-dark); transform: scale(0.98); }
+
+    /* ── CONFIRM SCREEN ── */
+    #conf-screen {
+      position: absolute;
+      inset: 0;
+      background: var(--dark);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 28px;
+      padding-top: calc(40px + var(--safe-top));
+      padding-bottom: calc(40px + var(--safe-bottom));
+      z-index: 150;
+    }
+
+    .conf-check {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px;
+      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .conf-title { font-size: 30px; font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: -0.8px; }
+    .conf-sub { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 28px; text-align: center; }
+
+    .conf-card {
+      background: #111;
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    .conf-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 0; font-size: 14px; color: #aaa; gap: 12px; }
+    .conf-row span:last-child { text-align: right; color: #ddd; font-weight: 500; }
+    .conf-divider { height: 1px; background: #222; margin: 10px 0; }
+    .conf-total { display: flex; justify-content: space-between; padding: 6px 0; }
+    .conf-total span:first-child { font-size: 15px; font-weight: 600; color: #fff; }
+    .conf-total span:last-child { font-size: 22px; font-weight: 800; color: var(--red); }
+
+    .reset-btn {
+      padding: 16px 36px;
+      border-radius: 12px;
+      border: 1.5px solid #2a2a2a;
+      background: transparent;
+      color: #666;
+      font-size: 15px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .reset-btn:active { border-color: #444; color: #999; }
+
+    /* ── MAIN APP ── */
+    #main-app {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--dark);
+      padding: 0 18px 14px;
+      padding-top: calc(14px + var(--safe-top));
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .hdr-row { display: flex; justify-content: space-between; align-items: center; }
+
+    .brand-block { display: flex; flex-direction: column; }
+    .brand-name { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+    .brand-sub { font-size: 11px; color: #555; letter-spacing: 0.8px; margin-top: 1px; }
+
+    .price-pill {
+      background: var(--red);
+      border-radius: 22px;
+      padding: 8px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .price-amt { font-size: 21px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.5px; }
+    .price-desc { font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 1px; letter-spacing: 0.3px; }
+
+    .progress-bar { display: flex; gap: 5px; margin-top: 14px; }
+    .prog-seg { flex: 1; height: 3px; border-radius: 2px; background: #2a2a2a; transition: background 0.35s; }
+    .prog-seg.done { background: var(--red); }
+
+    /* ── SCROLL BODY ── */
+    .scroll-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
+      padding: 22px 16px;
+      padding-bottom: calc(100px + var(--safe-bottom));
+    }
+
+    /* Sections */
+    .section { margin-bottom: 28px; }
+    .section-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--red);
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.6px;
+      margin-bottom: 14px;
+    }
+    .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+    /* ── SIZE ROWS ── */
+    .size-list { display: flex; flex-direction: column; gap: 10px; }
+    .size-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      min-height: 64px;
+    }
+    .size-row:active { transform: scale(0.98); }
+    .size-row.sel { border-color: var(--red); background: var(--red-light); }
+    .size-left { display: flex; flex-direction: column; }
+    .size-name { font-size: 16px; font-weight: 600; color: var(--text); }
+    .size-row.sel .size-name { color: var(--red-dark); }
+    .size-inch { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .size-price { font-size: 18px; font-weight: 800; color: var(--text); }
+    .size-row.sel .size-price { color: var(--red); }
+    .size-popular {
+      font-size: 10px;
+      font-weight: 600;
+      background: var(--red);
+      color: #fff;
+      border-radius: 8px;
+      padding: 2px 8px;
+      margin-top: 3px;
+      align-self: flex-start;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── CRUST ── */
+    .crust-list { display: flex; flex-direction: column; gap: 10px; }
+    .crust-row {
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      min-height: 64px;
+    }
+    .crust-row:active { transform: scale(0.98); }
+    .crust-row.sel { border-color: var(--red); background: var(--red-light); }
+    .crust-name { font-size: 16px; font-weight: 600; color: var(--text); }
+    .crust-row.sel .crust-name { color: var(--red-dark); }
+    .crust-desc { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+    /* ── SAUCE ── */
+    .sauce-wrap { display: flex; flex-wrap: wrap; gap: 9px; }
+    .sauce-chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 10px 16px;
+      border-radius: 24px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+      min-height: 44px;
+    }
+    .sauce-chip:active { transform: scale(0.96); }
+    .sauce-chip.sel { border-color: var(--red); background: var(--red-light); color: var(--red-dark); }
+    .sauce-upcharge { font-size: 12px; color: var(--muted); }
+    .sauce-chip.sel .sauce-upcharge { color: var(--red); }
+
+    /* ── TOPPINGS ── */
+    .swipe-hint {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .top-group-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin: 18px 0 8px;
+    }
+    .top-group-label:first-of-type { margin-top: 0; }
+
+    .top-item {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 9px;
+    }
+
+    .top-actions {
+      position: absolute;
+      top: 0; bottom: 0; right: 0;
+      display: flex;
+    }
+
+    .sw-btn {
+      width: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: filter 0.1s;
+    }
+    .sw-btn:active { filter: brightness(0.85); }
+    .sw-btn .sw-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #fff; }
+    .sw-easy  { background: #1D4ED8; }
+    .sw-reg   { background: var(--red); }
+    .sw-extra { background: #B45309; }
+    .sw-rm    { background: #4B5563; }
+
+    .top-face {
+      position: relative;
+      z-index: 2;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 64px;
+      will-change: transform;
+      transition: border-color 0.15s, background 0.15s;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-y;
+    }
+    .top-face.active { border-color: var(--red); background: var(--red-light); }
+    .top-face.active .top-n { color: var(--red-dark); }
+
+    .top-n { font-size: 15px; font-weight: 600; color: var(--text); }
+    .top-p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .state-badge {
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 4px 11px;
+      white-space: nowrap;
+    }
+    .badge-reg   { background: var(--red-light); color: var(--red-dark); }
+    .badge-extra { background: #FEF3C7; color: #78350F; }
+    .badge-easy  { background: #DBEAFE; color: #1E3A8A; }
+
+    /* ── SUMMARY ── */
+    .sum-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sum-row:last-of-type { border-bottom: none; }
+    .sum-label { font-size: 14px; color: #6B7280; }
+    .sum-val { font-size: 14px; font-weight: 600; color: var(--text); }
+    .sum-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; margin-top: 4px; border-top: 2px solid var(--border); }
+    .sum-total-label { font-size: 16px; font-weight: 700; color: var(--text); }
+    .sum-total-val { font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+
+    /* ── CTA BAR ── */
+    .cta-bar {
+      flex-shrink: 0;
+      padding: 12px 16px;
+      padding-bottom: calc(12px + var(--safe-bottom));
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 10;
+    }
+
+    .cta-btn {
+      width: 100%;
+      padding: 18px;
+      border-radius: 14px;
+      background: var(--red);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.2px;
+      transition: background 0.15s, transform 0.1s;
+      -webkit-appearance: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .cta-btn:active { background: var(--red-dark); transform: scale(0.99); }
+    .cta-cart-count {
+      background: rgba(255,255,255,0.25);
+      border-radius: 10px;
+      padding: 2px 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
   </style>
 </head>
-<body class="bg-gray-50 pb-24">
+<body>
+<div id="app">
 
-  <!-- Password Screen -->
-  <div id="password-screen" class="fixed inset-0 bg-black flex items-center justify-center z-50">
-    <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-xs w-full mx-4 text-center">
-      <h1 class="text-5xl mb-3">🍕</h1>
-      <h2 class="text-3xl font-bold mb-2">Hometown Pizza</h2>
-      <h3 class="text-xl text-gray-600">Test App</h3>
-      <input type="password" id="password-input" class="w-full px-5 py-4 border rounded-2xl text-center text-lg my-6" placeholder="Enter test password">
-      <button onclick="checkPassword()" class="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-2xl font-semibold text-lg">Start Ordering</button>
+  <!-- PASSWORD -->
+  <div id="pw-screen">
+    <div class="pw-pizza-icon">🍕</div>
+    <div class="pw-logo">Hometown<br>Pizza</div>
+    <div class="pw-tagline">Build Your Own</div>
+    <div class="pw-input-wrap">
+      <input class="pw-input" type="password" id="pw-in" placeholder="Enter password" autocomplete="current-password">
     </div>
+    <div class="pw-err" id="pw-err"></div>
+    <button class="pw-btn" id="pw-btn">Start Ordering</button>
   </div>
 
-  <!-- Main App -->
-  <div id="main-app" class="hidden max-w-md mx-auto bg-white min-h-screen">
+  <!-- CONFIRMATION -->
+  <div id="conf-screen">
+    <div class="conf-check">
+      <i class="ti ti-check" style="font-size:32px;color:#fff"></i>
+    </div>
+    <div class="conf-title">Order Placed!</div>
+    <div class="conf-sub">Your pizza is being made fresh.<br>Estimated time: 20–25 min.</div>
+    <div class="conf-card" id="conf-detail"></div>
+    <button class="reset-btn" id="reset-btn">Start a new order</button>
+  </div>
 
-    <!-- Floating Price Header -->
-    <div class="price-float bg-white border-b shadow-sm px-5 py-4">
-      <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Build Your Own</h1>
-        <div class="text-right">
-          <div id="total-price" class="text-2xl font-bold text-red-600">$18.95</div>
-          <div class="text-xs text-gray-500">Large • Original</div>
+  <!-- MAIN -->
+  <div id="main-app">
+    <div class="header">
+      <div class="hdr-row">
+        <div class="brand-block">
+          <span class="brand-name">Hometown Pizza</span>
+          <span class="brand-sub">BUILD YOUR OWN</span>
         </div>
+        <div class="price-pill">
+          <span class="price-amt" id="h-price">$18.95</span>
+          <span class="price-desc" id="h-desc">Large • Pan Style</span>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="prog-seg done" id="p0"></div>
+        <div class="prog-seg" id="p1"></div>
+        <div class="prog-seg" id="p2"></div>
+        <div class="prog-seg" id="p3"></div>
+        <div class="prog-seg" id="p4"></div>
       </div>
     </div>
 
-    <div class="p-5 space-y-10">
+    <div class="scroll-body" id="scroll-body">
 
-      <!-- Size -->
+      <!-- SIZE -->
       <div class="section">
-        <h3 class="font-bold text-lg mb-4">1. Size</h3>
-        <div class="grid grid-cols-2 gap-4">
-          <div onclick="selectSize(this, 14.95, 'Medium')" class="pizza-option border-2 border-gray-300 rounded-3xl p-6 text-center cursor-pointer">
-            <p class="font-bold text-xl">Medium</p>
-            <p class="text-3xl font-semibold mt-1">$14.95</p>
-          </div>
-          <div onclick="selectSize(this, 18.95, 'Large')" class="pizza-option border-2 border-red-500 rounded-3xl p-6 text-center cursor-pointer active">
-            <p class="font-bold text-xl">Large <span class="text-red-500 text-base">(Popular)</span></p>
-            <p class="text-3xl font-semibold mt-1">$18.95</p>
-          </div>
+        <div class="section-label">Step 1</div>
+        <div class="section-title">Size</div>
+        <div class="size-list" id="sizes"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- CRUST -->
+      <div class="section">
+        <div class="section-label">Step 2</div>
+        <div class="section-title">Crust</div>
+        <div class="crust-list" id="crusts"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- SAUCE -->
+      <div class="section">
+        <div class="section-label">Step 3</div>
+        <div class="section-title">Sauce</div>
+        <div class="sauce-wrap" id="sauces"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- TOPPINGS -->
+      <div class="section">
+        <div class="section-label">Step 4</div>
+        <div class="section-title">Toppings</div>
+        <div class="swipe-hint">
+          <i class="ti ti-chevrons-left" style="font-size:15px"></i>
+          Swipe left on a topping to set amount
         </div>
+        <div id="tops"></div>
       </div>
 
-      <!-- Crust -->
+      <div class="divider"></div>
+
+      <!-- SUMMARY -->
       <div class="section">
-        <h3 class="font-bold text-lg mb-4">2. Crust</h3>
-        <div class="grid grid-cols-2 gap-4">
-          <div onclick="selectCrust(this, 'Original')" class="pizza-option border-2 border-red-500 rounded-3xl p-6 text-center cursor-pointer active">
-            <p class="font-bold">Original Hand-Tossed</p>
-          </div>
-          <div onclick="selectCrust(this, 'Thin')" class="pizza-option border-2 border-gray-300 rounded-3xl p-6 text-center cursor-pointer">
-            <p class="font-bold">Thin & Crispy</p>
-          </div>
-        </div>
+        <div class="section-label">Step 5</div>
+        <div class="section-title">Your order</div>
+        <div id="summary"></div>
       </div>
 
-      <!-- Sauce & Cheese (Defaults for now) -->
-      <div class="section">
-        <h3 class="font-bold text-lg mb-4">3. Sauce & Cheese</h3>
-        <p class="text-gray-500 text-sm mb-4">We'll use our classic marinara + mozzarella unless you tell us otherwise later.</p>
-      </div>
+    </div><!-- end scroll-body -->
 
-      <!-- Toppings -->
-      <div class="section">
-        <h3 class="font-bold text-lg mb-4">4. Toppings</h3>
-        <p class="text-sm text-gray-600 mb-4">Tap once to add • Tap again for Extra</p>
-        <div id="toppings-list" class="grid grid-cols-2 gap-3">
-          <!-- Populated by JavaScript -->
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Bottom Bar -->
-    <div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t p-4">
-      <button onclick="addToCart()" 
-              class="w-full bg-red-600 text-white py-5 rounded-2xl font-bold text-lg shadow-lg">
-        Add to Cart — $<span id="bottom-price">18.95</span>
+    <div class="cta-bar">
+      <button class="cta-btn" id="cta-btn">
+        <i class="ti ti-shopping-cart" style="font-size:20px"></i>
+        Add to Cart — $<span id="cta-price">18.95</span>
       </button>
     </div>
   </div>
 
-  <script>
-    const CORRECT_PASSWORD = "pizza2026";
+</div><!-- end app -->
 
-    let order = {
-      size: "Large",
-      sizePrice: 18.95,
-      crust: "Original",
-      toppings: []
-    };
+<script>
+  const PW = "pizza2026";
 
-    const toppingsData = [
-      {name: "Pepperoni", price: 2.50},
-      {name: "Italian Sausage", price: 2.50},
-      {name: "Mushrooms", price: 1.75},
-      {name: "Onions", price: 1.50},
-      {name: "Green Peppers", price: 1.75},
-      {name: "Black Olives", price: 1.75},
-      {name: "Bacon", price: 2.75},
-      {name: "Ham", price: 2.50},
-      {name: "Jalapeños", price: 1.75},
-      {name: "Extra Cheese", price: 2.00}
-    ];
+  const SIZES = [
+    { name:"Large",  inch:"14 inch", price:18.95, pop:true  },
+    { name:"Medium", inch:"12 inch", price:14.95, pop:false },
+    { name:"Small",  inch:"10 inch", price:12.95, pop:false }
+  ];
 
-    function checkPassword() {
-      if (document.getElementById("password-input").value === CORRECT_PASSWORD) {
-        document.getElementById("password-screen").classList.add("hidden");
-        document.getElementById("main-app").classList.remove("hidden");
-        renderToppings();
-      } else {
-        alert("Wrong password");
-      }
+  const CRUSTS = [
+    { name:"Original — Pan Style", desc:"Thick, buttery, golden bottom" },
+    { name:"Thin & Crispy",        desc:"Light, crackly, extra crisp edge" }
+  ];
+
+  const SAUCES = [
+    { name:"Marinara",         price:0    },
+    { name:"Spicy Marinara",   price:0    },
+    { name:"Garlic Butter",    price:2.50 },
+    { name:"BBQ",              price:2.50 },
+    { name:"Alfredo",          price:2.50 },
+    { name:"Spicy Arrabbiata", price:2.50 }
+  ];
+
+  const TOP_GROUPS = [
+    { label:"Meats", items:[
+      {n:"Pepperoni",       p:2.50},
+      {n:"Beef",            p:2.50},
+      {n:"Pork Sausage",    p:2.50},
+      {n:"Italian Sausage", p:2.50},
+      {n:"Ham",             p:2.50},
+      {n:"Bacon",           p:2.75},
+      {n:"Chicken",         p:2.75}
+    ]},
+    { label:"Vegetables", items:[
+      {n:"Onions",        p:1.50},
+      {n:"Green Peppers", p:1.75},
+      {n:"Black Olives",  p:1.75},
+      {n:"Mushrooms",     p:1.75},
+      {n:"Spinach",       p:1.50},
+      {n:"Jalapeños",     p:1.75}
+    ]},
+    { label:"Cheese", items:[
+      {n:"Extra Cheese", p:2.00},
+      {n:"Mozzarella",   p:2.00},
+      {n:"Cheddar",      p:2.00},
+      {n:"Pepper Jack",  p:2.00}
+    ]}
+  ];
+
+  let allTops = [];
+  TOP_GROUPS.forEach(g => g.items.forEach(t => { t._i = allTops.length; allTops.push(t); }));
+
+  let ord = { size:0, crust:0, sauce:0, tops:{} };
+
+  /* ── AUTH ── */
+  function tryPw() {
+    const val = document.getElementById('pw-in').value;
+    if (val === PW) {
+      document.getElementById('pw-screen').style.display = 'none';
+      const main = document.getElementById('main-app');
+      main.style.display = 'flex';
+      init();
+    } else {
+      document.getElementById('pw-err').textContent = 'Wrong password — try again.';
+      document.getElementById('pw-in').value = '';
+      document.getElementById('pw-in').focus();
     }
+  }
+  document.getElementById('pw-btn').addEventListener('click', tryPw);
+  document.getElementById('pw-in').addEventListener('keydown', e => { if (e.key === 'Enter') tryPw(); });
 
-    function renderToppings() {
-      const container = document.getElementById("toppings-list");
-      container.innerHTML = "";
-      
-      toppingsData.forEach((topping, i) => {
-        const div = document.createElement("div");
-        div.className = "topping-card border-2 border-gray-300 rounded-3xl p-4 text-center cursor-pointer";
-        div.innerHTML = `
-          <p class="font-medium">${topping.name}</p>
-          <p class="text-sm text-gray-500">+$${topping.price.toFixed(2)}</p>
-        `;
-        div.onclick = () => toggleTopping(i, div);
-        container.appendChild(div);
-      });
-    }
+  /* ── INIT ── */
+  function init() { renderSizes(); renderCrusts(); renderSauces(); renderTops(); updateAll(); }
 
-    function toggleTopping(index, element) {
-      const topping = toppingsData[index];
-      const exists = order.toppings.findIndex(t => t.name === topping.name);
-      
-      if (exists > -1) {
-        order.toppings.splice(exists, 1);
-        element.classList.remove("active");
-      } else {
-        order.toppings.push(topping);
-        element.classList.add("active");
-      }
-      updatePrice();
-    }
-
-    function selectSize(el, price, sizeName) {
-      document.querySelectorAll('.pizza-option').forEach(e => e.classList.remove('active'));
-      el.classList.add('active');
-      order.size = sizeName;
-      order.sizePrice = price;
-      updatePrice();
-    }
-
-    function selectCrust(el, crustName) {
-      document.querySelectorAll('#step-2 .pizza-option, .pizza-option').forEach(e => e.classList.remove('active'));
-      el.classList.add('active');
-      order.crust = crustName;
-    }
-
-    function updatePrice() {
-      let total = order.sizePrice;
-      order.toppings.forEach(t => total += t.price);
-      
-      const formatted = total.toFixed(2);
-      document.getElementById("total-price").textContent = "$" + formatted;
-      document.getElementById("bottom-price").textContent = formatted;
-    }
-
-    function addToCart() {
-      const total = document.getElementById("total-price").textContent;
-      alert(`✅ Added to Cart!\n\n${order.size} ${order.crust} Pizza\nToppings: ${order.toppings.length}\nTotal: ${total}\n\n(Next: Cart & Checkout screen)`);
-    }
-
-    // Enter key support
-    document.getElementById("password-input").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") checkPassword();
+  /* ── SIZES ── */
+  function renderSizes() {
+    const c = document.getElementById('sizes'); c.innerHTML = '';
+    SIZES.forEach((s, i) => {
+      const d = document.createElement('div');
+      d.className = 'size-row' + (i === ord.size ? ' sel' : '');
+      d.setAttribute('role','button');
+      d.setAttribute('aria-pressed', i === ord.size ? 'true' : 'false');
+      d.innerHTML = `
+        <div class="size-left">
+          <div class="size-name">${s.name}</div>
+          <div class="size-inch">${s.inch}</div>
+          ${s.pop ? '<div class="size-popular">Most Popular</div>' : ''}
+        </div>
+        <div class="size-price">$${s.price.toFixed(2)}</div>`;
+      d.addEventListener('click', () => { ord.size = i; renderSizes(); updateAll(); });
+      c.appendChild(d);
     });
-  </script>
+  }
+
+  /* ── CRUSTS ── */
+  function renderCrusts() {
+    const c = document.getElementById('crusts'); c.innerHTML = '';
+    CRUSTS.forEach((cr, i) => {
+      const d = document.createElement('div');
+      d.className = 'crust-row' + (i === ord.crust ? ' sel' : '');
+      d.innerHTML = `<div class="crust-name">${cr.name}</div><div class="crust-desc">${cr.desc}</div>`;
+      d.addEventListener('click', () => { ord.crust = i; renderCrusts(); updateAll(); });
+      c.appendChild(d);
+    });
+  }
+
+  /* ── SAUCES ── */
+  function renderSauces() {
+    const c = document.getElementById('sauces'); c.innerHTML = '';
+    SAUCES.forEach((s, i) => {
+      const d = document.createElement('div');
+      d.className = 'sauce-chip' + (i === ord.sauce ? ' sel' : '');
+      const up = s.price > 0 ? `<span class="sauce-upcharge">+$${s.price.toFixed(2)}</span>` : '';
+      d.innerHTML = `${s.name}${up}`;
+      d.addEventListener('click', () => { ord.sauce = i; renderSauces(); updateAll(); });
+      c.appendChild(d);
+    });
+  }
+
+  /* ── TOPPINGS ── */
+  function renderTops() {
+    const c = document.getElementById('tops'); c.innerHTML = '';
+    let gi = 0;
+
+    TOP_GROUPS.forEach(group => {
+      const lbl = document.createElement('div');
+      lbl.className = 'top-group-label';
+      lbl.textContent = group.label;
+      c.appendChild(lbl);
+
+      group.items.forEach(t => {
+        const idx = gi++;
+        const state = ord.tops[idx] || 'none';
+
+        const wrap = document.createElement('div');
+        wrap.className = 'top-item';
+
+        /* swipe actions behind */
+        const acts = document.createElement('div');
+        acts.className = 'top-actions';
+        acts.innerHTML = `
+          <button class="sw-btn sw-easy"  data-idx="${idx}" data-state="easy"   ><i class="ti ti-minus" style="font-size:18px;color:#fff"></i><span class="sw-lbl">Easy</span></button>
+          <button class="sw-btn sw-reg"   data-idx="${idx}" data-state="regular"><i class="ti ti-check" style="font-size:18px;color:#fff"></i><span class="sw-lbl">Regular</span></button>
+          <button class="sw-btn sw-extra" data-idx="${idx}" data-state="extra"  ><i class="ti ti-plus"  style="font-size:18px;color:#fff"></i><span class="sw-lbl">Extra</span></button>
+          <button class="sw-btn sw-rm"    data-idx="${idx}" data-state="none"   ><i class="ti ti-x"     style="font-size:18px;color:#fff"></i><span class="sw-lbl">None</span></button>`;
+        acts.querySelectorAll('.sw-btn').forEach(btn => {
+          btn.addEventListener('click', e => {
+            e.stopPropagation();
+            setTop(parseInt(btn.dataset.idx), btn.dataset.state);
+          });
+        });
+
+        /* badge */
+        let badge = '';
+        if (state === 'regular') badge = '<span class="state-badge badge-reg">Added</span>';
+        if (state === 'extra')   badge = '<span class="state-badge badge-extra">Extra</span>';
+        if (state === 'easy')    badge = '<span class="state-badge badge-easy">Easy</span>';
+
+        /* face */
+        const face = document.createElement('div');
+        face.className = 'top-face' + (state !== 'none' ? ' active' : '');
+        face.innerHTML = `
+          <div>
+            <div class="top-n">${t.n}</div>
+            <div class="top-p">+$${t.p.toFixed(2)}</div>
+          </div>
+          <div>${badge}</div>`;
+
+        attachSwipe(face, acts, idx);
+        wrap.appendChild(acts);
+        wrap.appendChild(face);
+        c.appendChild(wrap);
+      });
+    });
+  }
+
+  function attachSwipe(face, acts, idx) {
+    const SNAP = 280; /* width of 4 buttons = 4×70 */
+    let x0 = 0, y0 = 0, dragging = false, open = false, lastDx = 0;
+
+    function getTranslate() {
+      const m = new DOMMatrix(getComputedStyle(face).transform);
+      return m.m41;
+    }
+
+    function snap(toOpen) {
+      face.style.transition = 'transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94)';
+      face.style.transform = toOpen ? `translateX(-${SNAP}px)` : 'translateX(0)';
+      open = toOpen;
+      setTimeout(() => { face.style.transition = ''; }, 300);
+    }
+
+    face.addEventListener('pointerdown', e => {
+      x0 = e.clientX; y0 = e.clientY; dragging = false; lastDx = 0;
+      face.setPointerCapture(e.pointerId);
+      face.style.transition = 'none';
+    });
+
+    face.addEventListener('pointermove', e => {
+      const dx = e.clientX - x0;
+      const dy = e.clientY - y0;
+      if (!dragging) {
+        if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+        if (Math.abs(dy) > Math.abs(dx)) return; /* vertical scroll wins */
+        dragging = true;
+      }
+      e.preventDefault();
+      lastDx = dx;
+      const base = open ? -SNAP : 0;
+      const nx = Math.max(-SNAP, Math.min(0, base + dx));
+      face.style.transform = `translateX(${nx}px)`;
+    }, { passive: false });
+
+    face.addEventListener('pointerup', () => {
+      if (!dragging) { if (open) snap(false); return; }
+      if (!open && lastDx < -40) snap(true);
+      else if (open && lastDx > 40) snap(false);
+      else snap(open);
+    });
+
+    face.addEventListener('pointercancel', () => snap(open));
+  }
+
+  function setTop(i, state) {
+    ord.tops[i] = state;
+    renderTops();
+    updateAll();
+  }
+
+  /* ── PRICING ── */
+  function calcTotal() {
+    let t = SIZES[ord.size].price + SAUCES[ord.sauce].price;
+    Object.entries(ord.tops).forEach(([i, s]) => {
+      const tp = allTops[i]; if (!tp) return;
+      if (s === 'regular' || s === 'easy') t += tp.p;
+      if (s === 'extra') t += tp.p * 1.5;
+    });
+    return t;
+  }
+
+  function updateAll() {
+    const tot = calcTotal();
+    const fmt = tot.toFixed(2);
+    document.getElementById('h-price').textContent = '$' + fmt;
+    document.getElementById('cta-price').textContent = fmt;
+    document.getElementById('h-desc').textContent =
+      SIZES[ord.size].name + ' • ' + (ord.crust === 0 ? 'Pan Style' : 'Thin & Crispy');
+    updateProgress();
+    renderSummary(tot);
+  }
+
+  function updateProgress() {
+    const hasTops = Object.values(ord.tops).some(v => v !== 'none');
+    [1, 1, 1, hasTops ? 1 : 0, 1].forEach((v, i) => {
+      document.getElementById('p' + i).className = 'prog-seg' + (v ? ' done' : '');
+    });
+  }
+
+  function renderSummary(tot) {
+    const sc = SAUCES[ord.sauce];
+    let h = '';
+    h += row(SIZES[ord.size].name + ' (' + SIZES[ord.size].inch + ')', '$' + SIZES[ord.size].price.toFixed(2));
+    h += row('Crust: ' + CRUSTS[ord.crust].name, 'Included');
+    h += row('Sauce: ' + sc.name, sc.price > 0 ? '+$' + sc.price.toFixed(2) : 'Included');
+
+    Object.entries(ord.tops).forEach(([i, s]) => {
+      if (s === 'none') return;
+      const tp = allTops[i]; if (!tp) return;
+      const pr = s === 'extra' ? tp.p * 1.5 : tp.p;
+      const tag = s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Easy)' : '';
+      h += row(tp.n + tag, '+$' + pr.toFixed(2));
+    });
+
+    h += `<div class="sum-total-row"><span class="sum-total-label">Total</span><span class="sum-total-val">$${tot.toFixed(2)}</span></div>`;
+    document.getElementById('summary').innerHTML = h;
+  }
+
+  function row(label, val) {
+    return `<div class="sum-row"><span class="sum-label">${label}</span><span class="sum-val">${val}</span></div>`;
+  }
+
+  /* ── ORDER ── */
+  document.getElementById('cta-btn').addEventListener('click', placeOrder);
+
+  function placeOrder() {
+    const tot = calcTotal();
+    const sc = SAUCES[ord.sauce];
+    let h = confRow('Size', SIZES[ord.size].name + ' (' + SIZES[ord.size].inch + ')');
+    h += confRow('Crust', CRUSTS[ord.crust].name);
+    h += confRow('Sauce', sc.name + (sc.price > 0 ? ' (+$' + sc.price.toFixed(2) + ')' : ''));
+
+    const tList = Object.entries(ord.tops)
+      .filter(([, s]) => s !== 'none')
+      .map(([i, s]) => allTops[i].n + (s === 'extra' ? ' ×2' : s === 'easy' ? ' (easy)' : ''));
+    if (tList.length) h += confRow('Toppings', tList.join(', '));
+
+    h += '<div class="conf-divider"></div>';
+    h += `<div class="conf-total"><span>Total</span><span>$${tot.toFixed(2)}</span></div>`;
+
+    document.getElementById('conf-detail').innerHTML = h;
+    const cs = document.getElementById('conf-screen');
+    cs.style.display = 'flex';
+    requestAnimationFrame(() => { cs.style.display = 'flex'; });
+  }
+
+  function confRow(label, val) {
+    return `<div class="conf-row"><span>${label}</span><span>${val}</span></div>`;
+  }
+
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    ord = { size:0, crust:0, sauce:0, tops:{} };
+    document.getElementById('conf-screen').style.display = 'none';
+    init();
+    document.getElementById('scroll-body').scrollTop = 0;
+  });
+</script>
 </body>
 </html>
