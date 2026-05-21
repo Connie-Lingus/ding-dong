@@ -22,482 +22,196 @@
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-    html, body {
-      height: 100%;
-      overscroll-behavior: none;
-      background: var(--dark);
-    }
-
-    body {
-      font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── FULL SCREEN WRAPPER ── */
-    #app {
-      position: fixed;
-      inset: 0;
-      background: var(--cream);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* ── PASSWORD SCREEN ── */
-    #pw-screen {
-      position: absolute;
-      inset: 0;
-      background: var(--dark);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      padding: 40px 32px;
-      padding-top: calc(40px + var(--safe-top));
-      z-index: 200;
-    }
-
-    .pw-pizza-icon {
-      font-size: 52px;
-      margin-bottom: 20px;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.07); }
-    }
-
-    .pw-logo {
-      font-size: 36px;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -1.5px;
-      line-height: 1;
-      text-align: center;
-      margin-bottom: 6px;
-    }
-
-    .pw-tagline {
-      font-size: 12px;
-      color: #555;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      margin-bottom: 48px;
-    }
-
-    .pw-input-wrap { width: 100%; margin-bottom: 12px; }
-
-    .pw-input {
-      width: 100%;
-      padding: 18px 20px;
-      border-radius: 14px;
-      border: 1.5px solid #252525;
-      background: #111;
-      color: #fff;
-      font-size: 17px;
-      text-align: center;
-      outline: none;
-      font-family: inherit;
-      letter-spacing: 3px;
-      transition: border-color 0.2s;
-    }
+    html, body { height: 100%; overscroll-behavior: none; background: var(--dark); }
+    body { font-family: -apple-system, 'SF Pro Display', 'Helvetica Neue', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+ 
+    #app { position: fixed; inset: 0; background: var(--cream); display: flex; flex-direction: column; overflow: hidden; }
+ 
+    /* PASSWORD */
+    #pw-screen { position: absolute; inset: 0; background: var(--dark); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; padding-top: calc(40px + var(--safe-top)); z-index: 200; }
+    .pw-pizza-icon { font-size: 52px; margin-bottom: 20px; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
+    .pw-logo { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -1.5px; line-height: 1; text-align: center; margin-bottom: 6px; }
+    .pw-tagline { font-size: 12px; color: #555; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 48px; }
+    .pw-input { width: 100%; padding: 18px 20px; border-radius: 14px; border: 1.5px solid #252525; background: #111; color: #fff; font-size: 17px; text-align: center; outline: none; font-family: inherit; letter-spacing: 3px; transition: border-color 0.2s; margin-bottom: 12px; }
     .pw-input::placeholder { letter-spacing: 0.5px; color: #444; }
     .pw-input:focus { border-color: var(--red); }
-
     .pw-err { font-size: 13px; color: #F09575; min-height: 18px; text-align: center; margin-bottom: 12px; }
-
-    .pw-btn {
-      width: 100%;
-      padding: 18px;
-      border-radius: 14px;
-      background: var(--red);
-      color: #fff;
-      font-size: 17px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: 0.3px;
-      transition: background 0.15s, transform 0.1s;
-      -webkit-appearance: none;
-    }
+    .pw-btn { width: 100%; padding: 18px; border-radius: 14px; background: var(--red); color: #fff; font-size: 17px; font-weight: 600; border: none; cursor: pointer; font-family: inherit; transition: background 0.15s, transform 0.1s; -webkit-appearance: none; }
     .pw-btn:active { background: var(--red-dark); transform: scale(0.98); }
-
-    /* ── CONFIRM SCREEN ── */
-    #conf-screen {
-      position: absolute;
-      inset: 0;
-      background: var(--dark);
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 28px;
-      padding-top: calc(40px + var(--safe-top));
-      padding-bottom: calc(40px + var(--safe-bottom));
-      z-index: 150;
-    }
-
-    .conf-check {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      background: var(--red);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 22px;
-      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
-    }
-    @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
+ 
+    /* CONFIRMATION */
+    #conf-screen { position: absolute; inset: 0; background: var(--dark); display: none; flex-direction: column; align-items: center; justify-content: center; padding: 40px 28px; padding-top: calc(40px + var(--safe-top)); padding-bottom: calc(40px + var(--safe-bottom)); z-index: 150; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .conf-check { width: 72px; height: 72px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes popIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
     .conf-title { font-size: 30px; font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: -0.8px; }
     .conf-sub { font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 28px; text-align: center; }
-
-    .conf-card {
-      background: #111;
-      border-radius: 16px;
-      padding: 20px;
-      width: 100%;
-      margin-bottom: 24px;
-    }
+    .conf-card { background: #111; border-radius: 16px; padding: 20px; width: 100%; margin-bottom: 24px; }
     .conf-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 0; font-size: 14px; color: #aaa; gap: 12px; }
     .conf-row span:last-child { text-align: right; color: #ddd; font-weight: 500; }
     .conf-divider { height: 1px; background: #222; margin: 10px 0; }
     .conf-total { display: flex; justify-content: space-between; padding: 6px 0; }
     .conf-total span:first-child { font-size: 15px; font-weight: 600; color: #fff; }
     .conf-total span:last-child { font-size: 22px; font-weight: 800; color: var(--red); }
-
-    .reset-btn {
-      padding: 16px 36px;
-      border-radius: 12px;
-      border: 1.5px solid #2a2a2a;
-      background: transparent;
-      color: #666;
-      font-size: 15px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: border-color 0.2s, color 0.2s;
-    }
+    .reset-btn { padding: 16px 36px; border-radius: 12px; border: 1.5px solid #2a2a2a; background: transparent; color: #666; font-size: 15px; cursor: pointer; font-family: inherit; }
     .reset-btn:active { border-color: #444; color: #999; }
-
-    /* ── MAIN APP ── */
-    #main-app {
-      display: none;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    /* ── HEADER ── */
-    .header {
-      background: var(--dark);
-      padding: 0 18px 14px;
-      padding-top: calc(14px + var(--safe-top));
-      flex-shrink: 0;
-      position: relative;
-      z-index: 10;
-    }
-
+ 
+    /* MAIN */
+    #main-app { display: none; flex-direction: column; height: 100%; }
+ 
+    /* HEADER */
+    .header { background: var(--dark); padding: 0 18px 14px; padding-top: calc(14px + var(--safe-top)); flex-shrink: 0; position: relative; z-index: 10; }
     .hdr-row { display: flex; justify-content: space-between; align-items: center; }
-
-    .brand-block { display: flex; flex-direction: column; }
     .brand-name { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
     .brand-sub { font-size: 11px; color: #555; letter-spacing: 0.8px; margin-top: 1px; }
-
-    .price-pill {
-      background: var(--red);
-      border-radius: 22px;
-      padding: 8px 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
+    .price-pill { background: var(--red); border-radius: 22px; padding: 8px 16px; display: flex; flex-direction: column; align-items: flex-end; }
     .price-amt { font-size: 21px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.5px; }
-    .price-desc { font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 1px; letter-spacing: 0.3px; }
-
+    .price-desc { font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 1px; }
     .progress-bar { display: flex; gap: 5px; margin-top: 14px; }
     .prog-seg { flex: 1; height: 3px; border-radius: 2px; background: #2a2a2a; transition: background 0.35s; }
     .prog-seg.done { background: var(--red); }
-
-    /* ── SCROLL BODY ── */
-    .scroll-body {
-      flex: 1;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior-y: contain;
-      padding: 22px 16px;
-      padding-bottom: calc(100px + var(--safe-bottom));
-    }
-
-    /* Sections */
-    .section { margin-bottom: 28px; }
-    .section-label {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--red);
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-      margin-bottom: 5px;
-    }
-    .section-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.6px;
-      margin-bottom: 14px;
-    }
-    .divider { height: 1px; background: var(--border); margin: 24px 0; }
-
-    /* ── SIZE ROWS ── */
-    .size-list { display: flex; flex-direction: column; gap: 10px; }
-    .size-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 18px;
-      border-radius: 14px;
-      border: 1.5px solid var(--border);
-      background: #fff;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s, transform 0.1s;
-      min-height: 64px;
-    }
-    .size-row:active { transform: scale(0.98); }
-    .size-row.sel { border-color: var(--red); background: var(--red-light); }
-    .size-left { display: flex; flex-direction: column; }
-    .size-name { font-size: 16px; font-weight: 600; color: var(--text); }
-    .size-row.sel .size-name { color: var(--red-dark); }
-    .size-inch { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .size-price { font-size: 18px; font-weight: 800; color: var(--text); }
-    .size-row.sel .size-price { color: var(--red); }
-    .size-popular {
-      font-size: 10px;
-      font-weight: 600;
-      background: var(--red);
-      color: #fff;
-      border-radius: 8px;
-      padding: 2px 8px;
-      margin-top: 3px;
-      align-self: flex-start;
-      letter-spacing: 0.5px;
-    }
-
-    /* ── CRUST ── */
-    .crust-list { display: flex; flex-direction: column; gap: 10px; }
-    .crust-row {
-      padding: 16px 18px;
-      border-radius: 14px;
-      border: 1.5px solid var(--border);
-      background: #fff;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s, transform 0.1s;
-      min-height: 64px;
-    }
-    .crust-row:active { transform: scale(0.98); }
-    .crust-row.sel { border-color: var(--red); background: var(--red-light); }
-    .crust-name { font-size: 16px; font-weight: 600; color: var(--text); }
-    .crust-row.sel .crust-name { color: var(--red-dark); }
-    .crust-desc { font-size: 13px; color: var(--muted); margin-top: 3px; }
-
-    /* ── SAUCE ── */
-    .sauce-wrap { display: flex; flex-wrap: wrap; gap: 9px; }
-    .sauce-chip {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 10px 16px;
-      border-radius: 24px;
-      border: 1.5px solid var(--border);
-      background: #fff;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.15s;
-      min-height: 44px;
-    }
-    .sauce-chip:active { transform: scale(0.96); }
-    .sauce-chip.sel { border-color: var(--red); background: var(--red-light); color: var(--red-dark); }
-    .sauce-upcharge { font-size: 12px; color: var(--muted); }
-    .sauce-chip.sel .sauce-upcharge { color: var(--red); }
-
-    /* ── TOPPINGS ── */
-    .swipe-hint {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-
-    .top-group-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--muted);
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      margin: 18px 0 8px;
-    }
-    .top-group-label:first-of-type { margin-top: 0; }
-
-    .top-item {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      margin-bottom: 9px;
-    }
-
-    .top-actions {
-      position: absolute;
-      top: 0; bottom: 0; right: 0;
-      display: flex;
-    }
-
-    .sw-btn {
-      width: 70px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      transition: filter 0.1s;
-    }
+ 
+    /* SCROLL */
+    .scroll-body { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior-y: contain; padding: 22px 16px; padding-bottom: calc(100px + var(--safe-bottom)); }
+ 
+    .section { margin-bottom: 24px; }
+    .section-label { font-size: 10px; font-weight: 600; color: var(--red); letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 5px; }
+    .section-title { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.6px; margin-bottom: 14px; }
+    .divider { height: 1px; background: var(--border); margin: 22px 0; }
+ 
+    /* SHARED ROW STYLE */
+    .opt-list { display: flex; flex-direction: column; gap: 8px; }
+    .opt-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 12px; border: 1.5px solid var(--border); background: #fff; cursor: pointer; transition: all 0.15s; min-height: 60px; }
+    .opt-row:active { transform: scale(0.98); }
+    .opt-row.sel { border-color: var(--red); background: var(--red-light); }
+    .opt-name { font-size: 15px; font-weight: 600; color: var(--text); }
+    .opt-row.sel .opt-name { color: var(--red-dark); }
+    .opt-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .opt-price { font-size: 17px; font-weight: 800; color: var(--text); }
+    .opt-row.sel .opt-price { color: var(--red); }
+    .pop-badge { font-size: 10px; font-weight: 600; background: var(--red); color: #fff; border-radius: 6px; padding: 2px 7px; margin-top: 3px; align-self: flex-start; }
+ 
+    /* SAUCE */
+    .sauce-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .sauce-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; border: 1.5px solid var(--border); background: #fff; cursor: pointer; transition: all 0.15s; min-height: 60px; }
+    .sauce-row:active { transform: scale(0.98); }
+    .sauce-row.sel-free { border-color: #16A34A; background: #F0FDF4; }
+    .sauce-row.sel-free .sauce-name { color: #14532D; }
+    .sauce-row.sel-free .sauce-desc { color: #16A34A; }
+    .sauce-row.sel-paid { border-color: var(--red); background: var(--red-light); }
+    .sauce-row.sel-paid .sauce-name { color: var(--red-dark); }
+    .sauce-info { flex: 1; }
+    .sauce-name { font-size: 15px; font-weight: 600; color: var(--text); }
+    .sauce-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .sauce-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .sauce-price-tag { font-size: 13px; font-weight: 700; color: var(--muted); }
+    .sauce-row.sel-paid .sauce-price-tag { color: var(--red); }
+    .badge-incl { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; white-space: nowrap; background: #86EFAC; color: #14532D; }
+    .badge-added { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; white-space: nowrap; background: var(--red-light); color: var(--red-dark); }
+ 
+    /* GARLIC BUTTER */
+    .gb-card { border: 1.5px solid var(--border); border-radius: 12px; background: #fff; transition: all 0.15s; cursor: pointer; }
+    .gb-card:active { transform: scale(0.98); }
+    .gb-card.sel { border-color: #C97D0A; background: #FFFBEB; }
+    .gb-inner { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; }
+    .gb-text { flex: 1; }
+    .gb-name { font-size: 15px; font-weight: 700; color: var(--text); }
+    .gb-card.sel .gb-name { color: #78350F; }
+    .gb-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+    .gb-card.sel .gb-desc { color: #92400E; }
+    .gb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; margin-left: 8px; }
+    .gb-price { font-size: 14px; font-weight: 700; color: var(--muted); }
+    .gb-card.sel .gb-price { color: #C97D0A; }
+    .gb-chk { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; background: #fff; transition: all 0.15s; }
+    .gb-card.sel .gb-chk { background: #C97D0A; border-color: #C97D0A; }
+ 
+    /* CHEESE */
+    .mozz-row { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 12px; background: #F0FDF4; border: 1.5px solid #86EFAC; margin-bottom: 10px; }
+    .mozz-name { font-size: 15px; font-weight: 700; color: #14532D; }
+    .mozz-sub { font-size: 12px; color: #16A34A; margin-top: 1px; }
+    .mozz-badge { font-size: 10px; font-weight: 600; background: #86EFAC; color: #14532D; border-radius: 6px; padding: 3px 9px; margin-left: auto; white-space: nowrap; }
+    .cheese-add-lbl { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin: 10px 0 8px; }
+    .cheese-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; border: 1.5px solid var(--border); background: #fff; cursor: pointer; transition: all 0.15s; min-height: 60px; margin-bottom: 8px; }
+    .cheese-row:active { transform: scale(0.98); }
+    .cheese-row.sel { border-color: var(--red); background: var(--red-light); }
+    .ch-name { font-size: 15px; font-weight: 600; color: var(--text); }
+    .cheese-row.sel .ch-name { color: var(--red-dark); }
+    .ch-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .ch-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .ch-price { font-size: 13px; font-weight: 700; color: var(--muted); }
+    .cheese-row.sel .ch-price { color: var(--red); }
+ 
+    /* TOPPINGS */
+    .hint { font-size: 12px; color: var(--muted); margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+    .free-note { font-size: 12px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 5px; }
+    .grp-lbl { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 1.2px; text-transform: uppercase; margin: 14px 0 7px; }
+    .top-item { position: relative; border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+    .top-actions { position: absolute; top: 0; bottom: 0; right: 0; display: flex; }
+    .sw-btn { width: 72px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: none; cursor: pointer; font-family: inherit; transition: filter 0.1s; }
     .sw-btn:active { filter: brightness(0.85); }
-    .sw-btn .sw-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #fff; }
-    .sw-easy  { background: #1D4ED8; }
-    .sw-reg   { background: var(--red); }
-    .sw-extra { background: #B45309; }
-    .sw-rm    { background: #4B5563; }
-
-    .top-face {
-      position: relative;
-      z-index: 2;
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      min-height: 64px;
-      will-change: transform;
-      transition: border-color 0.15s, background 0.15s;
-      cursor: grab;
-      user-select: none;
-      touch-action: pan-y;
-    }
-    .top-face.active { border-color: var(--red); background: var(--red-light); }
-    .top-face.active .top-n { color: var(--red-dark); }
-
+    .sw-lbl { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; }
+    .sw-easy { background: #F5C518; } .sw-easy .sw-lbl { color: #5C3A00; }
+    .sw-extra { background: #D32F2F; } .sw-extra .sw-lbl { color: #fff; }
+    .sw-none { background: #2E7D32; } .sw-none .sw-lbl { color: #fff; }
+    .top-face { position: relative; z-index: 2; background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; min-height: 60px; will-change: transform; cursor: pointer; user-select: none; touch-action: pan-y; transition: border-color 0.15s, background 0.15s; }
+    .top-face.selected { border-color: var(--red); background: var(--red-light); }
+    .top-face.selected .top-n { color: var(--red-dark); }
+    .top-face.is-free { border-color: #16A34A; background: #F0FDF4; }
+    .top-face.is-free .top-n { color: #14532D; }
     .top-n { font-size: 15px; font-weight: 600; color: var(--text); }
     .top-p { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-    .state-badge {
-      font-size: 11px;
-      font-weight: 600;
-      border-radius: 20px;
-      padding: 4px 11px;
-      white-space: nowrap;
-    }
-    .badge-reg   { background: var(--red-light); color: var(--red-dark); }
-    .badge-extra { background: #FEF3C7; color: #78350F; }
-    .badge-easy  { background: #DBEAFE; color: #1E3A8A; }
-
-    /* ── SUMMARY ── */
-    .sum-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .sum-row:last-of-type { border-bottom: none; }
-    .sum-label { font-size: 14px; color: #6B7280; }
-    .sum-val { font-size: 14px; font-weight: 600; color: var(--text); }
-    .sum-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; margin-top: 4px; border-top: 2px solid var(--border); }
-    .sum-total-label { font-size: 16px; font-weight: 700; color: var(--text); }
-    .sum-total-val { font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
-
-    /* ── CTA BAR ── */
-    .cta-bar {
-      flex-shrink: 0;
-      padding: 12px 16px;
-      padding-bottom: calc(12px + var(--safe-bottom));
-      background: var(--cream);
-      border-top: 1px solid var(--border);
-      position: relative;
-      z-index: 10;
-    }
-
-    .cta-btn {
-      width: 100%;
-      padding: 18px;
-      border-radius: 14px;
-      background: var(--red);
-      color: #fff;
-      font-size: 17px;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: 0.2px;
-      transition: background 0.15s, transform 0.1s;
-      -webkit-appearance: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
+    .top-p.free-price { color: #16A34A; font-weight: 700; }
+    .state-badge { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; white-space: nowrap; }
+    .b-added { background: var(--red-light); color: var(--red-dark); }
+    .b-extra { background: #FFCDD2; color: #B71C1C; }
+    .b-easy  { background: #FFF9C4; color: #5C3A00; }
+    .b-free  { background: #DCFCE7; color: #14532D; }
+ 
+    /* SUMMARY */
+    .sum-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .sum-label { color: #6B7280; }
+    .sum-val { font-weight: 600; color: var(--text); }
+    .sum-val.free { color: #16A34A; }
+    .sum-total { display: flex; justify-content: space-between; padding-top: 12px; margin-top: 4px; border-top: 2px solid var(--border); }
+    .sum-tl { font-size: 15px; font-weight: 700; color: var(--text); }
+    .sum-tv { font-size: 24px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+ 
+    /* CTA */
+    .cta-bar { flex-shrink: 0; padding: 12px 16px; padding-bottom: calc(12px + var(--safe-bottom)); background: var(--cream); border-top: 1px solid var(--border); }
+    .cta-btn { width: 100%; padding: 18px; border-radius: 14px; background: var(--red); color: #fff; font-size: 17px; font-weight: 700; border: none; cursor: pointer; font-family: inherit; transition: background 0.15s, transform 0.1s; -webkit-appearance: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .cta-btn:active { background: var(--red-dark); transform: scale(0.99); }
-    .cta-cart-count {
-      background: rgba(255,255,255,0.25);
-      border-radius: 10px;
-      padding: 2px 8px;
-      font-size: 13px;
-      font-weight: 700;
-    }
   </style>
 </head>
 <body>
 <div id="app">
-
+ 
   <!-- PASSWORD -->
   <div id="pw-screen">
     <div class="pw-pizza-icon">🍕</div>
     <div class="pw-logo">Hometown<br>Pizza</div>
     <div class="pw-tagline">Build Your Own</div>
-    <div class="pw-input-wrap">
-      <input class="pw-input" type="password" id="pw-in" placeholder="Enter password" autocomplete="current-password">
-    </div>
+    <input class="pw-input" type="password" id="pw-in" placeholder="Enter password" autocomplete="current-password">
     <div class="pw-err" id="pw-err"></div>
     <button class="pw-btn" id="pw-btn">Start Ordering</button>
   </div>
-
+ 
   <!-- CONFIRMATION -->
   <div id="conf-screen">
-    <div class="conf-check">
-      <i class="ti ti-check" style="font-size:32px;color:#fff"></i>
-    </div>
+    <div class="conf-check"><i class="ti ti-check" style="font-size:32px;color:#fff"></i></div>
     <div class="conf-title">Order Placed!</div>
     <div class="conf-sub">Your pizza is being made fresh.<br>Estimated time: 20–25 min.</div>
     <div class="conf-card" id="conf-detail"></div>
     <button class="reset-btn" id="reset-btn">Start a new order</button>
   </div>
-
+ 
   <!-- MAIN -->
   <div id="main-app">
     <div class="header">
       <div class="hdr-row">
-        <div class="brand-block">
-          <span class="brand-name">Hometown Pizza</span>
-          <span class="brand-sub">BUILD YOUR OWN</span>
+        <div>
+          <div class="brand-name">Hometown Pizza</div>
+          <div class="brand-sub">BUILD YOUR OWN</div>
         </div>
         <div class="price-pill">
           <span class="price-amt" id="h-price">$18.95</span>
@@ -512,58 +226,74 @@
         <div class="prog-seg" id="p4"></div>
       </div>
     </div>
-
+ 
     <div class="scroll-body" id="scroll-body">
-
-      <!-- SIZE -->
+ 
       <div class="section">
         <div class="section-label">Step 1</div>
         <div class="section-title">Size</div>
-        <div class="size-list" id="sizes"></div>
+        <div class="opt-list" id="sizes"></div>
       </div>
-
       <div class="divider"></div>
-
-      <!-- CRUST -->
+ 
       <div class="section">
         <div class="section-label">Step 2</div>
         <div class="section-title">Crust</div>
-        <div class="crust-list" id="crusts"></div>
+        <div class="opt-list" id="crusts"></div>
       </div>
-
       <div class="divider"></div>
-
-      <!-- SAUCE -->
+ 
       <div class="section">
         <div class="section-label">Step 3</div>
         <div class="section-title">Sauce</div>
-        <div class="sauce-wrap" id="sauces"></div>
+        <div class="sauce-list" id="sauces"></div>
+        <div class="gb-card" id="gb-card">
+          <div class="gb-inner">
+            <div class="gb-text">
+              <div class="gb-name">Garlic Butter Crust</div>
+              <div class="gb-desc">Brush your entire crust with a golden garlic butter base before we build your pizza — rich, savory flavor baked into every layer.</div>
+            </div>
+            <div class="gb-right">
+              <span class="gb-price">+$2.00</span>
+              <div class="gb-chk" id="gb-chk"></div>
+            </div>
+          </div>
+        </div>
       </div>
-
       <div class="divider"></div>
-
-      <!-- TOPPINGS -->
+ 
       <div class="section">
         <div class="section-label">Step 4</div>
-        <div class="section-title">Toppings</div>
-        <div class="swipe-hint">
-          <i class="ti ti-chevrons-left" style="font-size:15px"></i>
-          Swipe left on a topping to set amount
+        <div class="section-title">Cheese</div>
+        <div class="mozz-row">
+          <div>
+            <div class="mozz-name">Mozzarella</div>
+            <div class="mozz-sub">Always included — the base of every pizza</div>
+          </div>
+          <div class="mozz-badge">Included</div>
         </div>
-        <div id="tops"></div>
+        <div class="cheese-add-lbl">Add a cheese</div>
+        <div id="cheese-addons"></div>
       </div>
-
       <div class="divider"></div>
-
-      <!-- SUMMARY -->
+ 
       <div class="section">
         <div class="section-label">Step 5</div>
+        <div class="section-title">Toppings</div>
+        <div class="hint"><i class="ti ti-hand-finger" style="font-size:14px"></i> Tap to add &nbsp;•&nbsp; <i class="ti ti-chevrons-left" style="font-size:13px"></i> Swipe for Easy or Extra</div>
+        <div class="free-note" id="free-note" style="color:#9A8E88"><i class="ti ti-tag" style="font-size:14px"></i> First topping is included with your pizza</div>
+        <div id="tops"></div>
+      </div>
+      <div class="divider"></div>
+ 
+      <div class="section">
+        <div class="section-label">Step 6</div>
         <div class="section-title">Your order</div>
         <div id="summary"></div>
       </div>
-
-    </div><!-- end scroll-body -->
-
+ 
+    </div>
+ 
     <div class="cta-bar">
       <button class="cta-btn" id="cta-btn">
         <i class="ti ti-shopping-cart" style="font-size:20px"></i>
@@ -571,320 +301,285 @@
       </button>
     </div>
   </div>
-
-</div><!-- end app -->
-
+ 
+</div>
+ 
 <script>
   const PW = "pizza2026";
-
+ 
   const SIZES = [
     { name:"Large",  inch:"14 inch", price:18.95, pop:true  },
     { name:"Medium", inch:"12 inch", price:14.95, pop:false },
     { name:"Small",  inch:"10 inch", price:12.95, pop:false }
   ];
-
   const CRUSTS = [
-    { name:"Original — Pan Style", desc:"Thick, buttery, golden bottom" },
-    { name:"Thin & Crispy",        desc:"Light, crackly, extra crisp edge" }
+    { name:"Original — Pan Style", desc:"Thick, buttery, golden bottom"     },
+    { name:"Thin & Crispy",        desc:"Light, crackly, extra crisp edge"   }
   ];
-
   const SAUCES = [
-    { name:"Marinara",              price:0    },
-    { name:"Spicy Marinara",        price:0    },
-    { name:"Alfredo",               price:2.50 },
-    { name:"BBQ",                   price:2.50 },
-    { name:"Garlic Butter Base",    price:2.50 },
-    { name:"Garlic Butter Crust",   price:1.00 }
+    { name:"Marinara",       desc:"Classic slow-cooked tomato", price:0,    free:true  },
+    { name:"Spicy Marinara", desc:"A fiery kick in every bite", price:0,    free:true  },
+    { name:"Alfredo",        desc:"Rich, creamy parmesan base", price:2.50, free:false },
+    { name:"BBQ",            desc:"Smoky, tangy, bold",         price:2.50, free:false }
   ];
-
+  const CHEESE_ADDONS = [
+    { name:"Cheddar",     desc:"Sharp — blends great with mozz", price:2.00 },
+    { name:"Pepper Jack", desc:"Spicy kick — great with meats",  price:2.00 }
+  ];
   const TOP_GROUPS = [
     { label:"Meats", items:[
-      {n:"Pepperoni",       p:2.50},
-      {n:"Beef",            p:2.50},
-      {n:"Pork Sausage",    p:2.50},
-      {n:"Italian Sausage", p:2.50},
-      {n:"Ham",             p:2.50},
-      {n:"Bacon",           p:2.75},
+      {n:"Pepperoni",       p:2.50}, {n:"Beef",           p:2.50},
+      {n:"Pork Sausage",    p:2.50}, {n:"Italian Sausage",p:2.50},
+      {n:"Ham",             p:2.50}, {n:"Bacon",          p:2.75},
       {n:"Chicken",         p:2.75}
     ]},
     { label:"Vegetables", items:[
-      {n:"Onions",        p:1.50},
-      {n:"Green Peppers", p:1.75},
-      {n:"Black Olives",  p:1.75},
-      {n:"Mushrooms",     p:1.75},
-      {n:"Spinach",       p:1.75},
-      {n:"Jalapeños",     p:1.75}
-    ]},
-    { label:"Cheese", items:[
-      {n:"Mozzarella",     p:0},
-      {n:"Extra Cheese",   p:2.00},
-      {n:"+ Cheddar",      p:2.00},
-      {n:"+ Pepper Jack",  p:2.00}
+      {n:"Onions",        p:1.50}, {n:"Green Peppers", p:1.75},
+      {n:"Black Olives",  p:1.75}, {n:"Green Olives",  p:1.75},
+      {n:"Mushrooms",     p:1.75}, {n:"Spinach",       p:1.75},
+      {n:"Tomatoes",      p:1.75}, {n:"Jalapeños",     p:1.75}
     ]}
   ];
-
+ 
   let allTops = [];
   TOP_GROUPS.forEach(g => g.items.forEach(t => { t._i = allTops.length; allTops.push(t); }));
-
-  let ord = { size:0, crust:0, sauce:0, tops:{} };
-
+  let ord = { size:0, crust:0, sauce:0, gbCrust:false, cheeseAddons:{}, tops:{}, topOrder:[] };
+ 
   /* ── AUTH ── */
+  document.getElementById('pw-btn').addEventListener('click', tryPw);
+  document.getElementById('pw-in').addEventListener('keydown', e => { if (e.key === 'Enter') tryPw(); });
   function tryPw() {
-    const val = document.getElementById('pw-in').value;
-    if (val === PW) {
+    if (document.getElementById('pw-in').value === PW) {
       document.getElementById('pw-screen').style.display = 'none';
-      const main = document.getElementById('main-app');
-      main.style.display = 'flex';
+      document.getElementById('main-app').style.display = 'flex';
       init();
     } else {
       document.getElementById('pw-err').textContent = 'Wrong password — try again.';
       document.getElementById('pw-in').value = '';
-      document.getElementById('pw-in').focus();
     }
   }
-  document.getElementById('pw-btn').addEventListener('click', tryPw);
-  document.getElementById('pw-in').addEventListener('keydown', e => { if (e.key === 'Enter') tryPw(); });
-
-  /* ── INIT ── */
-  function init() { renderSizes(); renderCrusts(); renderSauces(); renderTops(); updateAll(); }
-
-  /* ── SIZES ── */
+ 
+  function getFreeIdx() {
+    for (const idx of ord.topOrder) {
+      const s = ord.tops[idx];
+      if (s === 'added' || s === 'easy') return idx;
+    }
+    return null;
+  }
+ 
+  function init() { renderSizes(); renderCrusts(); renderSauces(); renderGb(); renderCheese(); renderTops(); updateAll(); }
+ 
   function renderSizes() {
     const c = document.getElementById('sizes'); c.innerHTML = '';
     SIZES.forEach((s, i) => {
       const d = document.createElement('div');
-      d.className = 'size-row' + (i === ord.size ? ' sel' : '');
-      d.setAttribute('role','button');
-      d.setAttribute('aria-pressed', i === ord.size ? 'true' : 'false');
-      d.innerHTML = `
-        <div class="size-left">
-          <div class="size-name">${s.name}</div>
-          <div class="size-inch">${s.inch}</div>
-          ${s.pop ? '<div class="size-popular">Most Popular</div>' : ''}
-        </div>
-        <div class="size-price">$${s.price.toFixed(2)}</div>`;
-      d.addEventListener('click', () => { ord.size = i; renderSizes(); updateAll(); });
+      d.className = 'opt-row' + (i === ord.size ? ' sel' : '');
+      d.innerHTML = `<div><div class="opt-name">${s.name}</div><div class="opt-sub">${s.inch}</div>${s.pop ? '<div class="pop-badge">Most Popular</div>' : ''}</div><div class="opt-price">$${s.price.toFixed(2)}</div>`;
+      d.onclick = () => { ord.size = i; renderSizes(); updateAll(); };
       c.appendChild(d);
     });
   }
-
-  /* ── CRUSTS ── */
+ 
   function renderCrusts() {
     const c = document.getElementById('crusts'); c.innerHTML = '';
     CRUSTS.forEach((cr, i) => {
       const d = document.createElement('div');
-      d.className = 'crust-row' + (i === ord.crust ? ' sel' : '');
-      d.innerHTML = `<div class="crust-name">${cr.name}</div><div class="crust-desc">${cr.desc}</div>`;
-      d.addEventListener('click', () => { ord.crust = i; renderCrusts(); updateAll(); });
+      d.className = 'opt-row' + (i === ord.crust ? ' sel' : '');
+      d.innerHTML = `<div><div class="opt-name">${cr.name}</div><div class="opt-sub">${cr.desc}</div></div>`;
+      d.onclick = () => { ord.crust = i; renderCrusts(); updateAll(); };
       c.appendChild(d);
     });
   }
-
-  /* ── SAUCES ── */
+ 
   function renderSauces() {
     const c = document.getElementById('sauces'); c.innerHTML = '';
     SAUCES.forEach((s, i) => {
+      const isSel = i === ord.sauce;
       const d = document.createElement('div');
-      d.className = 'sauce-chip' + (i === ord.sauce ? ' sel' : '');
-      const up = s.price > 0 ? `<span class="sauce-upcharge">+$${s.price.toFixed(2)}</span>` : '';
-      d.innerHTML = `${s.name}${up}`;
-      d.addEventListener('click', () => { ord.sauce = i; renderSauces(); updateAll(); });
+      let cls = 'sauce-row';
+      if (isSel) cls += s.free ? ' sel-free' : ' sel-paid';
+      d.className = cls;
+      let right = '';
+      if (s.free) {
+        right = isSel ? '<span class="badge-incl">Included</span>' : '';
+      } else {
+        right = `<div class="sauce-right"><span class="sauce-price-tag">+$${s.price.toFixed(2)}</span>${isSel ? '<span class="badge-added">Added</span>' : ''}</div>`;
+      }
+      d.innerHTML = `<div class="sauce-info"><div class="sauce-name">${s.name}</div><div class="sauce-desc">${s.desc}</div></div>${right}`;
+      d.onclick = () => { ord.sauce = i; renderSauces(); updateAll(); };
       c.appendChild(d);
     });
   }
-
-  /* ── TOPPINGS ── */
+ 
+  function renderGb() {
+    const card = document.getElementById('gb-card'), chk = document.getElementById('gb-chk');
+    card.classList.toggle('sel', ord.gbCrust);
+    chk.innerHTML = ord.gbCrust ? '<i class="ti ti-check" style="font-size:13px;color:#fff"></i>' : '';
+  }
+  document.getElementById('gb-card').onclick = () => { ord.gbCrust = !ord.gbCrust; renderGb(); updateAll(); };
+ 
+  function renderCheese() {
+    const c = document.getElementById('cheese-addons'); c.innerHTML = '';
+    CHEESE_ADDONS.forEach((ch, i) => {
+      const sel = !!ord.cheeseAddons[i];
+      const d = document.createElement('div');
+      d.className = 'cheese-row' + (sel ? ' sel' : '');
+      const right = sel
+        ? `<div class="ch-right"><span class="ch-price">+$${ch.price.toFixed(2)}</span><span class="badge-added">Added</span></div>`
+        : `<div class="ch-right"><span class="ch-price">+$${ch.price.toFixed(2)}</span></div>`;
+      d.innerHTML = `<div><div class="ch-name">${ch.name}</div><div class="ch-sub">${ch.desc}</div></div>${right}`;
+      d.onclick = () => { ord.cheeseAddons[i] = !ord.cheeseAddons[i]; renderCheese(); updateAll(); };
+      c.appendChild(d);
+    });
+  }
+ 
   function renderTops() {
+    const freeIdx = getFreeIdx();
     const c = document.getElementById('tops'); c.innerHTML = '';
     let gi = 0;
-
     TOP_GROUPS.forEach(group => {
       const lbl = document.createElement('div');
-      lbl.className = 'top-group-label';
-      lbl.textContent = group.label;
-      c.appendChild(lbl);
-
+      lbl.className = 'grp-lbl'; lbl.textContent = group.label; c.appendChild(lbl);
       group.items.forEach(t => {
         const idx = gi++;
         const state = ord.tops[idx] || 'none';
-
-        const wrap = document.createElement('div');
-        wrap.className = 'top-item';
-
-        /* swipe actions behind */
-        const acts = document.createElement('div');
-        acts.className = 'top-actions';
+        const isSelected = state !== 'none';
+        const isFree = idx === freeIdx;
+        const wrap = document.createElement('div'); wrap.className = 'top-item';
+        const acts = document.createElement('div'); acts.className = 'top-actions';
         acts.innerHTML = `
-          <button class="sw-btn sw-easy"  data-idx="${idx}" data-state="easy"   ><i class="ti ti-minus" style="font-size:18px;color:#fff"></i><span class="sw-lbl">Easy</span></button>
-          <button class="sw-btn sw-reg"   data-idx="${idx}" data-state="regular"><i class="ti ti-check" style="font-size:18px;color:#fff"></i><span class="sw-lbl">Regular</span></button>
-          <button class="sw-btn sw-extra" data-idx="${idx}" data-state="extra"  ><i class="ti ti-plus"  style="font-size:18px;color:#fff"></i><span class="sw-lbl">Extra</span></button>
-          <button class="sw-btn sw-rm"    data-idx="${idx}" data-state="none"   ><i class="ti ti-x"     style="font-size:18px;color:#fff"></i><span class="sw-lbl">None</span></button>`;
+          <button class="sw-btn sw-easy"  data-idx="${idx}" data-st="easy"  aria-label="Easy ${t.n}"><i class="ti ti-minus" style="font-size:18px;color:#5C3A00"></i><span class="sw-lbl">Easy</span></button>
+          <button class="sw-btn sw-extra" data-idx="${idx}" data-st="extra" aria-label="Extra ${t.n}"><i class="ti ti-plus"  style="font-size:18px;color:#fff"></i><span class="sw-lbl">Extra</span></button>
+          <button class="sw-btn sw-none"  data-idx="${idx}" data-st="none"  aria-label="Remove ${t.n}"><i class="ti ti-x"     style="font-size:18px;color:#fff"></i><span class="sw-lbl">None</span></button>`;
         acts.querySelectorAll('.sw-btn').forEach(btn => {
-          btn.addEventListener('click', e => {
-            e.stopPropagation();
-            setTop(parseInt(btn.dataset.idx), btn.dataset.state);
-          });
+          btn.addEventListener('click', e => { e.stopPropagation(); setTop(parseInt(btn.dataset.idx), btn.dataset.st); });
         });
-
-        /* badge */
         let badge = '';
-        if (state === 'regular') badge = '<span class="state-badge badge-reg">Added</span>';
-        if (state === 'extra')   badge = '<span class="state-badge badge-extra">Extra</span>';
-        if (state === 'easy')    badge = '<span class="state-badge badge-easy">Easy</span>';
-
-        /* face */
+        if (isFree)               badge = '<span class="state-badge b-free">Included</span>';
+        else if (state === 'added') badge = '<span class="state-badge b-added">Added</span>';
+        else if (state === 'extra') badge = '<span class="state-badge b-extra">Extra</span>';
+        else if (state === 'easy')  badge = '<span class="state-badge b-easy">Easy</span>';
+        const priceLabel = isFree
+          ? '<div class="top-p free-price">Included with pizza</div>'
+          : `<div class="top-p">+$${t.p.toFixed(2)}</div>`;
+        let faceClass = 'top-face';
+        if (isFree) faceClass += ' is-free';
+        else if (isSelected) faceClass += ' selected';
         const face = document.createElement('div');
-        face.className = 'top-face' + (state !== 'none' ? ' active' : '');
-        face.innerHTML = `
-          <div>
-            <div class="top-n">${t.n}</div>
-            <div class="top-p">+$${t.p.toFixed(2)}</div>
-          </div>
-          <div>${badge}</div>`;
-
-        attachSwipe(face, acts, idx);
-        wrap.appendChild(acts);
-        wrap.appendChild(face);
-        c.appendChild(wrap);
+        face.className = faceClass;
+        face.innerHTML = `<div><div class="top-n">${t.n}</div>${priceLabel}</div><div>${badge}</div>`;
+        let didSwipe = false;
+        face.addEventListener('click', () => { if (didSwipe) return; setTop(idx, (ord.tops[idx] || 'none') === 'none' ? 'added' : 'none'); });
+        attachSwipe(face, () => { didSwipe = true; }, () => { setTimeout(() => { didSwipe = false; }, 60); });
+        wrap.appendChild(acts); wrap.appendChild(face); c.appendChild(wrap);
       });
     });
+    const note = document.getElementById('free-note');
+    if (freeIdx !== null) {
+      note.innerHTML = `<i class="ti ti-circle-check" style="font-size:14px"></i> ${allTops[freeIdx].n} is your included topping`;
+      note.style.color = '#16A34A';
+    } else {
+      note.innerHTML = `<i class="ti ti-tag" style="font-size:14px"></i> First topping is included with your pizza`;
+      note.style.color = '#9A8E88';
+    }
   }
-
-  function attachSwipe(face, acts, idx) {
-    const SNAP = 280; /* width of 4 buttons = 4×70 */
-    let x0 = 0, y0 = 0, dragging = false, open = false, lastDx = 0;
-
-    function getTranslate() {
-      const m = new DOMMatrix(getComputedStyle(face).transform);
-      return m.m41;
-    }
-
-    function snap(toOpen) {
-      face.style.transition = 'transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94)';
-      face.style.transform = toOpen ? `translateX(-${SNAP}px)` : 'translateX(0)';
-      open = toOpen;
-      setTimeout(() => { face.style.transition = ''; }, 300);
-    }
-
-    face.addEventListener('pointerdown', e => {
-      x0 = e.clientX; y0 = e.clientY; dragging = false; lastDx = 0;
-      face.setPointerCapture(e.pointerId);
-      face.style.transition = 'none';
-    });
-
+ 
+  function attachSwipe(face, onStart, onEnd) {
+    const SNAP = 216; let x0 = 0, y0 = 0, dragging = false, open = false, lastDx = 0;
+    function snap(o) { face.style.transition = 'transform 0.26s cubic-bezier(0.25,0.46,0.45,0.94)'; face.style.transform = o ? `translateX(-${SNAP}px)` : 'translateX(0)'; open = o; setTimeout(() => { face.style.transition = ''; }, 280); }
+    face.addEventListener('pointerdown', e => { x0 = e.clientX; y0 = e.clientY; dragging = false; lastDx = 0; face.setPointerCapture(e.pointerId); face.style.transition = 'none'; });
     face.addEventListener('pointermove', e => {
-      const dx = e.clientX - x0;
-      const dy = e.clientY - y0;
-      if (!dragging) {
-        if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
-        if (Math.abs(dy) > Math.abs(dx)) return; /* vertical scroll wins */
-        dragging = true;
-      }
-      e.preventDefault();
-      lastDx = dx;
-      const base = open ? -SNAP : 0;
-      const nx = Math.max(-SNAP, Math.min(0, base + dx));
-      face.style.transform = `translateX(${nx}px)`;
+      const dx = e.clientX - x0, dy = e.clientY - y0;
+      if (!dragging) { if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return; if (Math.abs(dy) > Math.abs(dx)) return; dragging = true; onStart(); }
+      e.preventDefault(); lastDx = dx;
+      face.style.transform = `translateX(${Math.max(-SNAP, Math.min(0, (open ? -SNAP : 0) + dx))}px)`;
     }, { passive: false });
-
-    face.addEventListener('pointerup', () => {
-      if (!dragging) { if (open) snap(false); return; }
-      if (!open && lastDx < -40) snap(true);
-      else if (open && lastDx > 40) snap(false);
-      else snap(open);
-    });
-
+    face.addEventListener('pointerup', () => { if (!dragging) { if (open) snap(false); return; } onEnd(); (!open && lastDx < -40) ? snap(true) : (open && lastDx > 40) ? snap(false) : snap(open); });
     face.addEventListener('pointercancel', () => snap(open));
   }
-
+ 
   function setTop(i, state) {
+    const prev = ord.tops[i] || 'none';
     ord.tops[i] = state;
-    renderTops();
-    updateAll();
+    if (state === 'none') ord.topOrder = ord.topOrder.filter(x => x !== i);
+    else if (prev === 'none') ord.topOrder.push(i);
+    renderTops(); updateAll();
   }
-
-  /* ── PRICING ── */
+ 
   function calcTotal() {
+    const freeIdx = getFreeIdx();
     let t = SIZES[ord.size].price + SAUCES[ord.sauce].price;
-    Object.entries(ord.tops).forEach(([i, s]) => {
-      const tp = allTops[i]; if (!tp) return;
-      if (s === 'regular' || s === 'easy') t += tp.p;
-      if (s === 'extra') t += tp.p * 1.5;
-    });
-    return t;
-  }
-
-  function updateAll() {
-    const tot = calcTotal();
-    const fmt = tot.toFixed(2);
-    document.getElementById('h-price').textContent = '$' + fmt;
-    document.getElementById('cta-price').textContent = fmt;
-    document.getElementById('h-desc').textContent =
-      SIZES[ord.size].name + ' • ' + (ord.crust === 0 ? 'Pan Style' : 'Thin & Crispy');
-    updateProgress();
-    renderSummary(tot);
-  }
-
-  function updateProgress() {
-    const hasTops = Object.values(ord.tops).some(v => v !== 'none');
-    [1, 1, 1, hasTops ? 1 : 0, 1].forEach((v, i) => {
-      document.getElementById('p' + i).className = 'prog-seg' + (v ? ' done' : '');
-    });
-  }
-
-  function renderSummary(tot) {
-    const sc = SAUCES[ord.sauce];
-    let h = '';
-    h += row(SIZES[ord.size].name + ' (' + SIZES[ord.size].inch + ')', '$' + SIZES[ord.size].price.toFixed(2));
-    h += row('Crust: ' + CRUSTS[ord.crust].name, 'Included');
-    h += row('Sauce: ' + sc.name, sc.price > 0 ? '+$' + sc.price.toFixed(2) : 'Included');
-
+    if (ord.gbCrust) t += 2.00;
+    Object.entries(ord.cheeseAddons).forEach(([i, on]) => { if (on) t += CHEESE_ADDONS[i].price; });
     Object.entries(ord.tops).forEach(([i, s]) => {
       if (s === 'none') return;
       const tp = allTops[i]; if (!tp) return;
-      const pr = s === 'extra' ? tp.p * 1.5 : tp.p;
-      const tag = s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Easy)' : '';
-      h += row(tp.n + tag, '+$' + pr.toFixed(2));
+      const isFree = parseInt(i) === freeIdx;
+      if (s === 'extra') t += tp.p * 1.5;
+      else if (!isFree) t += tp.p;
     });
-
-    h += `<div class="sum-total-row"><span class="sum-total-label">Total</span><span class="sum-total-val">$${tot.toFixed(2)}</span></div>`;
+    return t;
+  }
+ 
+  function updateAll() {
+    const tot = calcTotal(), fmt = tot.toFixed(2);
+    document.getElementById('h-price').textContent = '$' + fmt;
+    document.getElementById('cta-price').textContent = fmt;
+    document.getElementById('h-desc').textContent = SIZES[ord.size].name + ' • ' + (ord.crust === 0 ? 'Pan Style' : 'Thin & Crispy');
+    updateProg(); renderSummary(tot);
+  }
+ 
+  function updateProg() {
+    const hasTops = Object.values(ord.tops).some(v => v !== 'none');
+    [1, 1, 1, hasTops ? 1 : 0, 1].forEach((v, i) => { document.getElementById('p' + i).className = 'prog-seg' + (v ? ' done' : ''); });
+  }
+ 
+  function renderSummary(tot) {
+    const sc = SAUCES[ord.sauce]; const freeIdx = getFreeIdx();
+    let h = srow(SIZES[ord.size].name + ' (' + SIZES[ord.size].inch + ')', '$' + SIZES[ord.size].price.toFixed(2));
+    h += srow('Crust: ' + CRUSTS[ord.crust].name, 'Included');
+    h += srow('Sauce: ' + sc.name, sc.price > 0 ? '+$' + sc.price.toFixed(2) : 'Included');
+    if (ord.gbCrust) h += srow('+ Garlic Butter Crust', '+$2.00');
+    h += srow('Cheese: Mozzarella', 'Included');
+    Object.entries(ord.cheeseAddons).forEach(([i, on]) => { if (on) h += srow('+ ' + CHEESE_ADDONS[i].name, '+$' + CHEESE_ADDONS[i].price.toFixed(2)); });
+    ord.topOrder.forEach(i => {
+      const s = ord.tops[i]; if (!s || s === 'none') return;
+      const tp = allTops[i]; if (!tp) return;
+      const isFree = i === freeIdx;
+      const tag = s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Easy)' : '';
+      if (s === 'extra') h += srow(tp.n + tag, '+$' + (tp.p * 1.5).toFixed(2));
+      else if (isFree) h += `<div class="sum-row"><span class="sum-label">${tp.n}${tag} <span style="font-size:11px;color:#16A34A">✓ included</span></span><span class="sum-val free">$0.00</span></div>`;
+      else h += srow(tp.n + tag, '+$' + tp.p.toFixed(2));
+    });
+    h += `<div class="sum-total"><span class="sum-tl">Total</span><span class="sum-tv">$${tot.toFixed(2)}</span></div>`;
     document.getElementById('summary').innerHTML = h;
   }
-
-  function row(label, val) {
-    return `<div class="sum-row"><span class="sum-label">${label}</span><span class="sum-val">${val}</span></div>`;
-  }
-
-  /* ── ORDER ── */
+ 
+  function srow(l, v) { return `<div class="sum-row"><span class="sum-label">${l}</span><span class="sum-val">${v}</span></div>`; }
+ 
   document.getElementById('cta-btn').addEventListener('click', placeOrder);
-
   function placeOrder() {
-    const tot = calcTotal();
-    const sc = SAUCES[ord.sauce];
+    const tot = calcTotal(); const sc = SAUCES[ord.sauce]; const freeIdx = getFreeIdx();
     let h = confRow('Size', SIZES[ord.size].name + ' (' + SIZES[ord.size].inch + ')');
     h += confRow('Crust', CRUSTS[ord.crust].name);
-    h += confRow('Sauce', sc.name + (sc.price > 0 ? ' (+$' + sc.price.toFixed(2) + ')' : ''));
-
-    const tList = Object.entries(ord.tops)
-      .filter(([, s]) => s !== 'none')
-      .map(([i, s]) => allTops[i].n + (s === 'extra' ? ' ×2' : s === 'easy' ? ' (easy)' : ''));
+    let sauceStr = sc.name; if (ord.gbCrust) sauceStr += ' + Garlic Butter Crust';
+    h += confRow('Sauce', sauceStr);
+    let cheeseStr = 'Mozzarella';
+    Object.entries(ord.cheeseAddons).forEach(([i, on]) => { if (on) cheeseStr += ', ' + CHEESE_ADDONS[i].name; });
+    h += confRow('Cheese', cheeseStr);
+    const tList = ord.topOrder.filter(i => ord.tops[i] !== 'none').map(i => {
+      const s = ord.tops[i]; return allTops[i].n + (s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Easy)' : '') + (i === freeIdx ? ' ✓' : '');
+    });
     if (tList.length) h += confRow('Toppings', tList.join(', '));
-
     h += '<div class="conf-divider"></div>';
     h += `<div class="conf-total"><span>Total</span><span>$${tot.toFixed(2)}</span></div>`;
-
     document.getElementById('conf-detail').innerHTML = h;
-    const cs = document.getElementById('conf-screen');
-    cs.style.display = 'flex';
-    requestAnimationFrame(() => { cs.style.display = 'flex'; });
+    document.getElementById('conf-screen').style.display = 'flex';
   }
-
-  function confRow(label, val) {
-    return `<div class="conf-row"><span>${label}</span><span>${val}</span></div>`;
-  }
-
+  function confRow(l, v) { return `<div class="conf-row"><span>${l}</span><span>${v}</span></div>`; }
+ 
   document.getElementById('reset-btn').addEventListener('click', () => {
-    ord = { size:0, crust:0, sauce:0, tops:{} };
+    ord = { size:0, crust:0, sauce:0, gbCrust:false, cheeseAddons:{}, tops:{}, topOrder:[] };
     document.getElementById('conf-screen').style.display = 'none';
     init();
     document.getElementById('scroll-body').scrollTop = 0;
