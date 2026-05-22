@@ -92,7 +92,7 @@
     .pop-badge { font-size: 10px; font-weight: 600; background: var(--red); color: #fff; border-radius: 6px; padding: 2px 7px; margin-top: 3px; align-self: flex-start; }
  
     /* SAUCE */
-    .sauce-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .sauce-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 14px; }
     .sauce-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--border); background: #fff; cursor: pointer; transition: all 0.15s; min-height: 64px; }
     .sauce-row:active { transform: scale(0.98); }
     .sauce-row.sel-free { border-color: #16A34A; background: #F0FDF4; }
@@ -107,8 +107,13 @@
     .sauce-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .sauce-price-tag { font-size: 13px; font-weight: 700; color: var(--muted); }
     .sauce-row.sel-paid .sauce-price-tag { color: var(--red); }
-    .badge-incl { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; white-space: nowrap; background: #86EFAC; color: #14532D; }
+    .badge-incl  { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; white-space: nowrap; background: #86EFAC; color: #14532D; }
     .badge-added { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; white-space: nowrap; background: var(--red-light); color: var(--red-dark); }
+    .badge-light { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; white-space: nowrap; background: #FEF9C3; color: #713F12; }
+    .badge-xtra  { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; white-space: nowrap; background: #DCFCE7; color: #14532D; }
+    /* sauce item wrapper for swipe */
+    .sauce-item { position: relative; border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+    .sauce-actions { position: absolute; top: 0; bottom: 0; right: 0; display: flex; }
  
     /* GARLIC BUTTER */
     .gb-card { border: 1.5px solid var(--border); border-radius: 12px; background: #fff; transition: all 0.15s; cursor: pointer; }
@@ -132,7 +137,9 @@
     .mozz-sub { font-size: 12px; color: #16A34A; margin-top: 1px; }
     .mozz-badge { font-size: 10px; font-weight: 600; background: #86EFAC; color: #14532D; border-radius: 6px; padding: 3px 9px; margin-left: auto; white-space: nowrap; }
     .cheese-add-lbl { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin: 10px 0 8px; }
-    .cheese-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--border); background: #fff; cursor: pointer; transition: all 0.15s; min-height: 60px; margin-bottom: 8px; }
+    .cheese-item { position: relative; border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+    .cheese-actions { position: absolute; top: 0; bottom: 0; right: 0; display: flex; }
+    .cheese-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--border); background: #fff; cursor: pointer; transition: all 0.15s; min-height: 60px; }
     .cheese-row:active { transform: scale(0.98); }
     .cheese-row.sel { border-color: var(--red); background: var(--red-light); }
     .ch-name { font-size: 15px; font-weight: 600; color: var(--text); }
@@ -151,9 +158,8 @@
     .sw-btn { width: 72px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: none; cursor: pointer; font-family: inherit; transition: filter 0.1s; }
     .sw-btn:active { filter: brightness(0.85); }
     .sw-lbl { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; }
-    .sw-easy  { background: #F5C518; } .sw-easy .sw-lbl  { color: #5C3A00; }
-    .sw-extra { background: #D32F2F; } .sw-extra .sw-lbl { color: #fff; }
-    .sw-none  { background: #2E7D32; } .sw-none .sw-lbl  { color: #fff; }
+    .sw-light { background: #FEF9C3; } .sw-light .sw-lbl { color: #713F12; }
+    .sw-extra { background: #DCFCE7; } .sw-extra .sw-lbl { color: #14532D; }
     .top-face { position: relative; z-index: 2; background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; min-height: 62px; will-change: transform; cursor: pointer; user-select: none; touch-action: pan-y; transition: border-color 0.15s, background 0.15s; }
     .top-face.selected { border-color: var(--red); background: var(--red-light); }
     .top-face.selected .top-n { color: var(--red-dark); }
@@ -166,8 +172,8 @@
     .top-p.free-price { color: #16A34A; font-weight: 700; }
     .state-badge { font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; white-space: nowrap; }
     .b-added { background: var(--red-light); color: var(--red-dark); }
-    .b-extra { background: #FFCDD2; color: #B71C1C; }
-    .b-easy  { background: #FFF9C4; color: #5C3A00; }
+    .b-extra { background: #DCFCE7; color: #14532D; }
+    .b-light { background: #FEF9C3; color: #713F12; }
     .b-free  { background: #DCFCE7; color: #14532D; }
  
     /* SUMMARY */
@@ -254,7 +260,7 @@
             <img src="images/Garlic_Butter-nobg.png" alt="Garlic Butter" style="width:44px;height:44px;object-fit:contain;flex-shrink:0">
             <div class="gb-text">
               <div class="gb-name">Garlic Butter Crust</div>
-              <div class="gb-desc">Brush your entire crust with a golden garlic butter before we build your pizza — rich, savory flavor baked into every layer.</div>
+              <div class="gb-desc">Brush your entire crust with a golden garlic butter base before we build your pizza — rich, savory flavor baked into every layer.</div>
             </div>
             <div class="gb-right">
               <span class="gb-price">+$2.00</span>
@@ -323,10 +329,10 @@
   ];
  
   const SAUCES = [
-    { name:"Marinara",       desc:"Classic tomato",  price:0,    free:true,  img:"images/Marinara_Basil_2-nobg.png" },
-    { name:"Spicy Marinara", desc:"Kick up every bite",  price:0,    free:true,  img:"images/Spicy_Marinara-nobg.png"   },
-    { name:"Alfredo",        desc:"Rich & creamy",  price:2.50, free:false, img:"images/Alfredo-nobg.png"          },
-    { name:"BBQ",            desc:"Tangy & bold",          price:2.50, free:false, img:"images/BBQ-nobg.png"              },
+    { name:"Marinara",       desc:"Classic slow-cooked tomato",  price:0,    free:true,  img:"images/Marinara_Basil_2-nobg.png" },
+    { name:"Spicy Marinara", desc:"A fiery kick in every bite",  price:0,    free:true,  img:"images/Spicy_Marinara-nobg.png"   },
+    { name:"Alfredo",        desc:"Rich, creamy parmesan base",  price:2.50, free:false, img:"images/Alfredo-nobg.png"          },
+    { name:"BBQ",            desc:"Smoky, tangy, bold",          price:2.50, free:false, img:"images/BBQ-nobg.png"              },
     { name:"Buffalo",        desc:"Spicy, tangy, bold heat",     price:2.50, free:false, img:"images/Buffalo-nobg.png"          }
   ];
  
@@ -346,22 +352,23 @@
       { n:"Chicken",         p:2.75, img:"images/Chicken-nobg.png"         }
     ]},
     { label:"Vegetables", items:[
-  { n:"Onions",        p:1.50, img:"images/Onion-nobg.png"              },
-  { n:"Green Peppers", p:1.75, img:"images/Green_Pepper-nobg.png"       },
-  { n:"Mushrooms",     p:1.75, img:"images/Mushroom-nobg.png"           },
-  { n:"Black Olives",  p:1.75, img:"images/Black_Olive-nobg.png"        },
-  { n:"Tomatoes",      p:1.75, img:"images/Tomato-nobg.png"             },
-  { n:"Jalapeños",     p:1.75, img:"images/Jalepeno-nobg.png"           },
-  { n:"Green Olives",  p:1.75, img:"images/Green_Olive-nobg.png"        },
-  { n:"Spinach",       p:1.75, img:"images/Spinach-nobg.png"            },
-  { n:"Pineapple",     p:1.75, img:"images/Pineapple-nobg.png"          },
-  { n:"Peperoncini",   p:1.75, img:"images/Peperoncini_Peppers-nobg.png"}
-]}
+      { n:"Onions",        p:1.50, img:"images/Onion-nobg.png"              },
+      { n:"Green Peppers", p:1.75, img:"images/Green_Pepper-nobg.png"       },
+      { n:"Mushrooms",     p:1.75, img:"images/Mushroom-nobg.png"           },
+      { n:"Black Olives",  p:1.75, img:"images/Black_Olive-nobg.png"        },
+      { n:"Tomatoes",      p:1.75, img:"images/Tomato-nobg.png"             },
+      { n:"Jalapeños",     p:1.75, img:"images/Jalepeno-nobg.png"           },
+      { n:"Green Olives",  p:1.75, img:"images/Green_Olive-nobg.png"        },
+      { n:"Spinach",       p:1.75, img:"images/Spinach-nobg.png"            },
+      { n:"Peperoncini",   p:1.75, img:"images/Peperoncini_Peppers-nobg.png"},
+      { n:"Pineapple",     p:1.75, img:"images/Pineapple-nobg.png"          }
+      
+    ]}
   ];
  
   let allTops = [];
   TOP_GROUPS.forEach(g => g.items.forEach(t => { t._i = allTops.length; allTops.push(t); }));
-  let ord = { size:0, crust:0, sauce:0, gbCrust:false, cheeseAddons:{}, tops:{}, topOrder:[] };
+  let ord = { size:0, crust:0, sauce:0, sauceMod:'normal', gbCrust:false, cheeseAddons:{}, cheeseMod:{}, tops:{}, topOrder:[] };
  
   /* ── AUTH ── */
   document.getElementById('pw-btn').addEventListener('click', tryPw);
@@ -413,21 +420,84 @@
     const c = document.getElementById('sauces'); c.innerHTML = '';
     SAUCES.forEach((s, i) => {
       const isSel = i === ord.sauce;
-      const d = document.createElement('div');
+ 
+      const wrap = document.createElement('div');
+      wrap.className = 'sauce-item';
+ 
+      /* swipe actions — only meaningful on selected sauce */
+      const acts = document.createElement('div');
+      acts.className = 'sauce-actions';
+      acts.innerHTML = `
+        <button class="sw-btn sw-light" data-si="${i}" data-sm="light" aria-label="Light ${s.name}">
+          <i class="ti ti-droplet-half-2" style="font-size:17px;color:#713F12"></i>
+          <span class="sw-lbl">Light</span>
+        </button>
+        <button class="sw-btn sw-extra" data-si="${i}" data-sm="extra" aria-label="Extra ${s.name}">
+          <i class="ti ti-droplet-filled" style="font-size:17px;color:#14532D"></i>
+          <span class="sw-lbl">Extra</span>
+        </button>`;
+      acts.querySelectorAll('.sw-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          if (isSel) { ord.sauceMod = btn.dataset.sm; renderSauces(); }
+        });
+      });
+ 
+      const face = document.createElement('div');
       let cls = 'sauce-row';
       if (isSel) cls += s.free ? ' sel-free' : ' sel-paid';
-      d.className = cls;
-      let right = '';
-      if (s.free) {
-        right = isSel ? '<span class="badge-incl">Included</span>' : '';
-      } else {
-        right = `<div class="sauce-right"><span class="sauce-price-tag">+$${s.price.toFixed(2)}</span>${isSel ? '<span class="badge-added">Added</span>' : ''}</div>`;
+      face.className = cls;
+      face.style.cssText = 'position:relative;z-index:2;will-change:transform;touch-action:pan-y;user-select:none;margin-bottom:0;border-radius:12px;';
+ 
+      /* badge */
+      let badge = '';
+      if (isSel) {
+        if (ord.sauceMod === 'light')  badge = '<span class="badge-light">Light</span>';
+        else if (ord.sauceMod === 'extra') badge = '<span class="badge-xtra">Extra</span>';
+        else if (s.free)  badge = '<span class="badge-incl">Included</span>';
+        else badge = '<span class="badge-added">Added</span>';
+      } else if (!s.free) {
+        badge = `<span style="font-size:13px;font-weight:700;color:var(--muted)">+$${s.price.toFixed(2)}</span>`;
       }
+ 
       const imgHtml = s.img ? `<img src="${s.img}" alt="${s.name}" class="sauce-img">` : '';
-      d.innerHTML = `${imgHtml}<div class="sauce-info"><div class="sauce-name">${s.name}</div><div class="sauce-desc">${s.desc}</div></div>${right}`;
-      d.onclick = () => { ord.sauce = i; renderSauces(); updateAll(); };
-      c.appendChild(d);
+      face.innerHTML = `${imgHtml}<div class="sauce-info"><div class="sauce-name">${s.name}</div><div class="sauce-desc">${s.desc}</div></div><div>${badge}</div>`;
+ 
+      /* tap to select; if already selected tap resets modifier */
+      face.addEventListener('click', () => {
+        if (!didSwipeSauce) {
+          if (isSel) { ord.sauceMod = 'normal'; }
+          else { ord.sauce = i; ord.sauceMod = 'normal'; }
+          renderSauces(); updateAll();
+        }
+      });
+ 
+      if (isSel) attachSauceSwipe(face);
+ 
+      wrap.appendChild(acts);
+      wrap.appendChild(face);
+      c.appendChild(wrap);
     });
+  }
+ 
+  let didSwipeSauce = false;
+  function attachSauceSwipe(face) {
+    const SNAP = 144;
+    let x0=0, y0=0, dragging=false, open=false, lastDx=0;
+    function snap(o) { face.style.transition='transform 0.26s cubic-bezier(0.25,0.46,0.45,0.94)'; face.style.transform=o?`translateX(-${SNAP}px)`:'translateX(0)'; open=o; setTimeout(()=>{face.style.transition='';},280); }
+    face.addEventListener('pointerdown', e=>{x0=e.clientX;y0=e.clientY;dragging=false;lastDx=0;didSwipeSauce=false;face.setPointerCapture(e.pointerId);face.style.transition='none';});
+    face.addEventListener('pointermove', e=>{
+      const dx=e.clientX-x0,dy=e.clientY-y0;
+      if(!dragging){if(Math.abs(dx)<5&&Math.abs(dy)<5)return;if(Math.abs(dy)>Math.abs(dx))return;dragging=true;didSwipeSauce=true;}
+      e.preventDefault();lastDx=dx;
+      face.style.transform=`translateX(${Math.max(-SNAP,Math.min(0,(open?-SNAP:0)+dx))}px)`;
+    },{passive:false});
+    face.addEventListener('pointerup',()=>{
+      if(!dragging){if(open)snap(false);return;}
+      setTimeout(()=>{didSwipeSauce=false;},60);
+      (!open&&lastDx<-40)?snap(true):(open&&lastDx>40)?snap(false):snap(open);
+    });
+    face.addEventListener('pointercancel',()=>snap(open));
   }
  
   function renderGb() {
@@ -441,16 +511,74 @@
     const c = document.getElementById('cheese-addons'); c.innerHTML = '';
     CHEESE_ADDONS.forEach((ch, i) => {
       const sel = !!ord.cheeseAddons[i];
-      const d = document.createElement('div');
-      d.className = 'cheese-row' + (sel ? ' sel' : '');
+      const mod = ord.cheeseMod[i] || 'normal';
+ 
+      const wrap = document.createElement('div');
+      wrap.className = 'cheese-item';
+ 
+      const acts = document.createElement('div');
+      acts.className = 'cheese-actions';
+      acts.innerHTML = `
+        <button class="sw-btn sw-light" data-ci="${i}" data-cm="light" aria-label="Light ${ch.name}">
+          <i class="ti ti-droplet-half-2" style="font-size:17px;color:#713F12"></i>
+          <span class="sw-lbl">Light</span>
+        </button>
+        <button class="sw-btn sw-extra" data-ci="${i}" data-cm="extra" aria-label="Extra ${ch.name}">
+          <i class="ti ti-droplet-filled" style="font-size:17px;color:#14532D"></i>
+          <span class="sw-lbl">Extra</span>
+        </button>`;
+      acts.querySelectorAll('.sw-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          if (sel) { ord.cheeseMod[i] = btn.dataset.cm; renderCheese(); updateAll(); }
+        });
+      });
+ 
+      /* badge */
+      let badge = '';
+      if (sel) {
+        if (mod === 'light')       badge = '<span class="badge-light">Light</span>';
+        else if (mod === 'extra')  badge = '<span class="badge-xtra">Extra</span>';
+        else                       badge = '<span class="badge-added">Added</span>';
+      }
+ 
+      const face = document.createElement('div');
+      face.className = 'cheese-row' + (sel ? ' sel' : '');
+      face.style.cssText = 'position:relative;z-index:2;will-change:transform;touch-action:pan-y;user-select:none;margin-bottom:0;border-radius:12px;';
       const imgHtml = ch.img ? `<img src="${ch.img}" alt="${ch.name}" style="width:42px;height:42px;object-fit:contain;flex-shrink:0">` : '';
-      const right = sel
-        ? `<div class="ch-right"><span class="ch-price">+$${ch.price.toFixed(2)}</span><span class="badge-added">Added</span></div>`
-        : `<div class="ch-right"><span class="ch-price">+$${ch.price.toFixed(2)}</span></div>`;
-      d.innerHTML = `${imgHtml}<div><div class="ch-name">${ch.name}</div><div class="ch-sub">${ch.desc}</div></div>${right}`;
-      d.onclick = () => { ord.cheeseAddons[i] = !ord.cheeseAddons[i]; renderCheese(); updateAll(); };
-      c.appendChild(d);
+      face.innerHTML = `${imgHtml}<div><div class="ch-name">${ch.name}</div><div class="ch-sub">${ch.desc}</div></div><div class="ch-right"><span class="ch-price">+$${ch.price.toFixed(2)}</span>${badge}</div>`;
+ 
+      let didSwipeCheese = false;
+      face.addEventListener('click', () => {
+        if (didSwipeCheese) return;
+        if (sel) { ord.cheeseAddons[i] = false; ord.cheeseMod[i] = 'normal'; }
+        else { ord.cheeseAddons[i] = true; }
+        renderCheese(); updateAll();
+      });
+      attachCheeseSwipe(face, i, sel);
+ 
+      wrap.appendChild(acts);
+      wrap.appendChild(face);
+      c.appendChild(wrap);
     });
+  }
+ 
+  function attachCheeseSwipe(face, idx, sel) {
+    const SNAP = 144;
+    let x0=0, y0=0, dragging=false, open=false, lastDx=0, didSwipeCheese=false;
+    function snap(o) { face.style.transition='transform 0.26s cubic-bezier(0.25,0.46,0.45,0.94)'; face.style.transform=o?`translateX(-${SNAP}px)`:'translateX(0)'; open=o; setTimeout(()=>{face.style.transition='';},280); }
+    face.addEventListener('pointerdown', e=>{x0=e.clientX;y0=e.clientY;dragging=false;lastDx=0;face.setPointerCapture(e.pointerId);face.style.transition='none';});
+    face.addEventListener('pointermove', e=>{
+      const dx=e.clientX-x0,dy=e.clientY-y0;
+      if(!dragging){if(Math.abs(dx)<5&&Math.abs(dy)<5)return;if(Math.abs(dy)>Math.abs(dx))return;dragging=true;}
+      e.preventDefault();lastDx=dx;
+      face.style.transform=`translateX(${Math.max(-SNAP,Math.min(0,(open?-SNAP:0)+dx))}px)`;
+    },{passive:false});
+    face.addEventListener('pointerup',()=>{
+      if(!dragging){if(open)snap(false);return;}
+      (!open&&lastDx<-40)?snap(true):(open&&lastDx>40)?snap(false):snap(open);
+    });
+    face.addEventListener('pointercancel',()=>snap(open));
   }
  
   function renderTops() {
@@ -468,9 +596,8 @@
         const wrap = document.createElement('div'); wrap.className = 'top-item';
         const acts = document.createElement('div'); acts.className = 'top-actions';
         acts.innerHTML = `
-          <button class="sw-btn sw-easy"  data-idx="${idx}" data-st="easy"  aria-label="Easy ${t.n}"><i class="ti ti-minus" style="font-size:18px;color:#5C3A00"></i><span class="sw-lbl">Easy</span></button>
-          <button class="sw-btn sw-extra" data-idx="${idx}" data-st="extra" aria-label="Extra ${t.n}"><i class="ti ti-plus"  style="font-size:18px;color:#fff"></i><span class="sw-lbl">Extra</span></button>
-          <button class="sw-btn sw-none"  data-idx="${idx}" data-st="none"  aria-label="Remove ${t.n}"><i class="ti ti-x"     style="font-size:18px;color:#fff"></i><span class="sw-lbl">None</span></button>`;
+          <button class="sw-btn sw-light" data-idx="${idx}" data-st="easy"  aria-label="Light ${t.n}"><i class="ti ti-droplet-half-2" style="font-size:18px;color:#713F12"></i><span class="sw-lbl">Light</span></button>
+          <button class="sw-btn sw-extra" data-idx="${idx}" data-st="extra" aria-label="Extra ${t.n}"><i class="ti ti-droplet-filled"  style="font-size:18px;color:#14532D"></i><span class="sw-lbl">Extra</span></button>`;
         acts.querySelectorAll('.sw-btn').forEach(btn => {
           btn.addEventListener('click', e => { e.stopPropagation(); setTop(parseInt(btn.dataset.idx), btn.dataset.st); });
         });
@@ -478,7 +605,7 @@
         if (isFree)                badge = '<span class="state-badge b-free">Included</span>';
         else if (state === 'added') badge = '<span class="state-badge b-added">Added</span>';
         else if (state === 'extra') badge = '<span class="state-badge b-extra">Extra</span>';
-        else if (state === 'easy')  badge = '<span class="state-badge b-easy">Easy</span>';
+        else if (state === 'easy')  badge = '<span class="state-badge b-light">Light</span>';
         const priceLabel = isFree
           ? '<div class="top-p free-price">Included with pizza</div>'
           : `<div class="top-p">+$${t.p.toFixed(2)}</div>`;
@@ -513,7 +640,7 @@
   }
  
   function attachSwipe(face, onStart, onEnd) {
-    const SNAP = 216; let x0 = 0, y0 = 0, dragging = false, open = false, lastDx = 0;
+    const SNAP = 144; let x0 = 0, y0 = 0, dragging = false, open = false, lastDx = 0;
     function snap(o) { face.style.transition = 'transform 0.26s cubic-bezier(0.25,0.46,0.45,0.94)'; face.style.transform = o ? `translateX(-${SNAP}px)` : 'translateX(0)'; open = o; setTimeout(() => { face.style.transition = ''; }, 280); }
     face.addEventListener('pointerdown', e => { x0 = e.clientX; y0 = e.clientY; dragging = false; lastDx = 0; face.setPointerCapture(e.pointerId); face.style.transition = 'none'; });
     face.addEventListener('pointermove', e => {
@@ -608,7 +735,7 @@
   function confRow(l, v) { return `<div class="conf-row"><span>${l}</span><span>${v}</span></div>`; }
  
   document.getElementById('reset-btn').addEventListener('click', () => {
-    ord = { size:0, crust:0, sauce:0, gbCrust:false, cheeseAddons:{}, tops:{}, topOrder:[] };
+    ord = { size:0, crust:0, sauce:0, sauceMod:'normal', gbCrust:false, cheeseAddons:{}, cheeseMod:{}, tops:{}, topOrder:[] };
     document.getElementById('conf-screen').style.display = 'none';
     init();
     document.getElementById('scroll-body').scrollTop = 0;
