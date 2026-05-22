@@ -80,7 +80,7 @@
     .section-title { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.6px; margin-bottom: 14px; }
     .divider { height: 1px; background: var(--border); margin: 22px 0; }
  
-    /* SHARED ROW STYLE */
+    /* SHARED ROW */
     .opt-list { display: flex; flex-direction: column; gap: 8px; }
     .opt-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 12px; border: 1.5px solid var(--border); background: #fff; cursor: pointer; transition: all 0.15s; min-height: 60px; }
     .opt-row:active { transform: scale(0.98); }
@@ -151,14 +151,21 @@
     .sw-btn { width: 72px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: none; cursor: pointer; font-family: inherit; transition: filter 0.1s; }
     .sw-btn:active { filter: brightness(0.85); }
     .sw-lbl { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; }
-    .sw-easy { background: #F5C518; } .sw-easy .sw-lbl { color: #5C3A00; }
+    .sw-easy  { background: #F5C518; } .sw-easy .sw-lbl  { color: #5C3A00; }
     .sw-extra { background: #D32F2F; } .sw-extra .sw-lbl { color: #fff; }
-    .sw-none { background: #2E7D32; } .sw-none .sw-lbl { color: #fff; }
-    .top-face { position: relative; z-index: 2; background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; min-height: 60px; will-change: transform; cursor: pointer; user-select: none; touch-action: pan-y; transition: border-color 0.15s, background 0.15s; }
+    .sw-none  { background: #2E7D32; } .sw-none .sw-lbl  { color: #fff; }
+ 
+    /* topping face */
+    .top-face { position: relative; z-index: 2; background: #fff; border: 1.5px solid var(--border); border-radius: 12px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; min-height: 60px; will-change: transform; cursor: pointer; user-select: none; touch-action: pan-y; transition: border-color 0.15s, background 0.15s; }
     .top-face.selected { border-color: var(--red); background: var(--red-light); }
     .top-face.selected .top-n { color: var(--red-dark); }
     .top-face.is-free { border-color: #16A34A; background: #F0FDF4; }
     .top-face.is-free .top-n { color: #14532D; }
+ 
+    /* topping image */
+    .top-img { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; }
+    .top-img-placeholder { width: 40px; height: 40px; flex-shrink: 0; }
+ 
     .top-n { font-size: 15px; font-weight: 600; color: var(--text); }
     .top-p { font-size: 12px; color: var(--muted); margin-top: 2px; }
     .top-p.free-price { color: #16A34A; font-weight: 700; }
@@ -313,31 +320,42 @@
     { name:"Small",  inch:"10 inch", price:12.95, pop:false }
   ];
   const CRUSTS = [
-    { name:"Original — Pan Style", desc:"Thick, buttery, golden bottom"     },
-    { name:"Thin & Crispy",        desc:"Light, crackly, extra crisp edge"   }
+    { name:"Original — Pan Style", desc:"Thick, buttery, golden bottom"   },
+    { name:"Thin & Crispy",        desc:"Light, crackly, extra crisp edge" }
   ];
   const SAUCES = [
-    { name:"Marinara",       desc:"Classic tomato", price:0,    free:true  },
-    { name:"Spicy Marinara", desc:"Kick up every bite", price:0,    free:true  },
-    { name:"Alfredo",        desc:"Rich & creamy base", price:2.50, free:false },
-    { name:"BBQ",            desc:"Tangy & bold",         price:2.50, free:false }
+    { name:"Marinara",       desc:"Classic slow-cooked tomato", price:0,    free:true  },
+    { name:"Spicy Marinara", desc:"A fiery kick in every bite", price:0,    free:true  },
+    { name:"Alfredo",        desc:"Rich, creamy parmesan base", price:2.50, free:false },
+    { name:"BBQ",            desc:"Smoky, tangy, bold",         price:2.50, free:false }
   ];
   const CHEESE_ADDONS = [
     { name:"Cheddar",     desc:"Sharp — blends great with mozz", price:2.00 },
     { name:"Pepper Jack", desc:"Spicy kick — great with meats",  price:2.00 }
   ];
+ 
+  /* ── TOPPINGS
+     img: path relative to index.html in your repo
+     Leave img null for vegetables (no images yet) ── */
   const TOP_GROUPS = [
     { label:"Meats", items:[
-      {n:"Pepperoni",       p:2.50}, {n:"Beef",           p:2.50},
-      {n:"Pork Sausage",    p:2.50}, {n:"Italian Sausage",p:2.50},
-      {n:"Ham",             p:2.50}, {n:"Bacon",          p:2.75},
-      {n:"Chicken",         p:2.75}
+      { n:"Pepperoni",       p:2.50, img:"images/Pepperoni.PNG"      },
+      { n:"Beef",            p:2.50, img:"images/Beef.PNG"           },
+      { n:"Pork Sausage",    p:2.50, img:"images/Pork.PNG"           },
+      { n:"Italian Sausage", p:2.50, img:"images/Italian_Sausage.PNG"},
+      { n:"Ham",             p:2.50, img:"images/Ham.PNG"            },
+      { n:"Bacon",           p:2.75, img:"images/Bacon.PNG"          },
+      { n:"Chicken",         p:2.75, img:"images/Chicken.PNG"        }
     ]},
     { label:"Vegetables", items:[
-      {n:"Onions",        p:1.50}, {n:"Green Peppers", p:1.75},
-      {n:"Black Olives",  p:1.75}, {n:"Green Olives",  p:1.75},
-      {n:"Mushrooms",     p:1.75}, {n:"Spinach",       p:1.75},
-      {n:"Tomatoes",      p:1.75}, {n:"Jalapeños",     p:1.75}
+      { n:"Onions",        p:1.50, img:null },
+      { n:"Green Peppers", p:1.75, img:null },
+      { n:"Black Olives",  p:1.75, img:null },
+      { n:"Green Olives",  p:1.75, img:null },
+      { n:"Mushrooms",     p:1.75, img:null },
+      { n:"Spinach",       p:1.75, img:null },
+      { n:"Tomatoes",      p:1.75, img:null },
+      { n:"Jalapeños",     p:1.75, img:null }
     ]}
   ];
  
@@ -446,6 +464,7 @@
         const isSelected = state !== 'none';
         const isFree = idx === freeIdx;
         const wrap = document.createElement('div'); wrap.className = 'top-item';
+ 
         const acts = document.createElement('div'); acts.className = 'top-actions';
         acts.innerHTML = `
           <button class="sw-btn sw-easy"  data-idx="${idx}" data-st="easy"  aria-label="Easy ${t.n}"><i class="ti ti-minus" style="font-size:18px;color:#5C3A00"></i><span class="sw-lbl">Easy</span></button>
@@ -454,26 +473,43 @@
         acts.querySelectorAll('.sw-btn').forEach(btn => {
           btn.addEventListener('click', e => { e.stopPropagation(); setTop(parseInt(btn.dataset.idx), btn.dataset.st); });
         });
+ 
         let badge = '';
-        if (isFree)               badge = '<span class="state-badge b-free">Included</span>';
+        if (isFree)                badge = '<span class="state-badge b-free">Included</span>';
         else if (state === 'added') badge = '<span class="state-badge b-added">Added</span>';
         else if (state === 'extra') badge = '<span class="state-badge b-extra">Extra</span>';
         else if (state === 'easy')  badge = '<span class="state-badge b-easy">Easy</span>';
+ 
         const priceLabel = isFree
           ? '<div class="top-p free-price">Included with pizza</div>'
           : `<div class="top-p">+$${t.p.toFixed(2)}</div>`;
+ 
+        /* image or empty spacer */
+        const imgHtml = t.img
+          ? `<img src="${t.img}" alt="${t.n}" class="top-img">`
+          : `<div class="top-img-placeholder"></div>`;
+ 
         let faceClass = 'top-face';
         if (isFree) faceClass += ' is-free';
         else if (isSelected) faceClass += ' selected';
+ 
         const face = document.createElement('div');
         face.className = faceClass;
-        face.innerHTML = `<div><div class="top-n">${t.n}</div>${priceLabel}</div><div>${badge}</div>`;
+        face.innerHTML = `
+          <div style="display:flex;align-items:center;gap:10px">
+            ${imgHtml}
+            <div><div class="top-n">${t.n}</div>${priceLabel}</div>
+          </div>
+          <div>${badge}</div>`;
+ 
         let didSwipe = false;
         face.addEventListener('click', () => { if (didSwipe) return; setTop(idx, (ord.tops[idx] || 'none') === 'none' ? 'added' : 'none'); });
         attachSwipe(face, () => { didSwipe = true; }, () => { setTimeout(() => { didSwipe = false; }, 60); });
+ 
         wrap.appendChild(acts); wrap.appendChild(face); c.appendChild(wrap);
       });
     });
+ 
     const note = document.getElementById('free-note');
     if (freeIdx !== null) {
       note.innerHTML = `<i class="ti ti-circle-check" style="font-size:14px"></i> ${allTops[freeIdx].n} is your included topping`;
@@ -568,7 +604,8 @@
     Object.entries(ord.cheeseAddons).forEach(([i, on]) => { if (on) cheeseStr += ', ' + CHEESE_ADDONS[i].name; });
     h += confRow('Cheese', cheeseStr);
     const tList = ord.topOrder.filter(i => ord.tops[i] !== 'none').map(i => {
-      const s = ord.tops[i]; return allTops[i].n + (s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Easy)' : '') + (i === freeIdx ? ' ✓' : '');
+      const s = ord.tops[i];
+      return allTops[i].n + (s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Easy)' : '') + (i === freeIdx ? ' ✓' : '');
     });
     if (tList.length) h += confRow('Toppings', tList.join(', '));
     h += '<div class="conf-divider"></div>';
