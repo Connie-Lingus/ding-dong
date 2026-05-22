@@ -217,9 +217,12 @@
   <div id="main-app">
     <div class="header">
       <div class="hdr-row">
-        <div>
-          <div class="brand-name">Hometown Pizza</div>
-          <div class="brand-sub">BUILD YOUR OWN</div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <img src="images/Pizza_Box_2-nobg.png" alt="Hometown Pizza" style="width:44px;height:44px;object-fit:contain;flex-shrink:0">
+          <div>
+            <div class="brand-name">Hometown Pizza</div>
+            <div class="brand-sub">BUILD YOUR OWN</div>
+          </div>
         </div>
         <div class="price-pill">
           <span class="price-amt" id="h-price">$18.95</span>
@@ -254,6 +257,7 @@
       <div class="section">
         <div class="section-label">Step 3</div>
         <div class="section-title">Sauce</div>
+        <div class="hint"><i class="ti ti-hand-finger" style="font-size:14px"></i> Tap to select &nbsp;•&nbsp; <i class="ti ti-chevrons-left" style="font-size:13px"></i> Swipe selected sauce for Light or Extra</div>
         <div class="sauce-list" id="sauces"></div>
         <div class="gb-card" id="gb-card">
           <div class="gb-inner">
@@ -274,13 +278,26 @@
       <div class="section">
         <div class="section-label">Step 4</div>
         <div class="section-title">Cheese</div>
-        <div class="mozz-row">
-          <img src="images/Mozzarella-nobg.png" alt="Mozzarella" style="width:42px;height:42px;object-fit:contain;flex-shrink:0">
-          <div>
-            <div class="mozz-name">Mozzarella</div>
-            <div class="mozz-sub">Always included — the base of every pizza</div>
+        <div class="hint"><i class="ti ti-hand-finger" style="font-size:14px"></i> Tap to add &nbsp;•&nbsp; <i class="ti ti-chevrons-left" style="font-size:13px"></i> Swipe for Light or Extra</div>
+        <div class="cheese-item" id="mozz-item">
+          <div class="cheese-actions" id="mozz-actions">
+            <button class="sw-btn sw-light" id="mozz-light" aria-label="Light Mozzarella">
+              <i class="ti ti-droplet-half-2" style="font-size:17px;color:#713F12"></i>
+              <span class="sw-lbl">Light</span>
+            </button>
+            <button class="sw-btn sw-extra" id="mozz-extra" aria-label="Extra Mozzarella">
+              <i class="ti ti-droplet-filled" style="font-size:17px;color:#14532D"></i>
+              <span class="sw-lbl">Extra +$1</span>
+            </button>
           </div>
-          <div class="mozz-badge">Included</div>
+          <div class="mozz-row" id="mozz-face" style="position:relative;z-index:2;will-change:transform;touch-action:pan-y;user-select:none;cursor:grab;">
+            <img src="images/Mozzarella-nobg.png" alt="Mozzarella" style="width:42px;height:42px;object-fit:contain;flex-shrink:0">
+            <div>
+              <div class="mozz-name">Mozzarella</div>
+              <div class="mozz-sub">Always included — the base of every pizza</div>
+            </div>
+            <div id="mozz-badge-wrap"><div class="mozz-badge">Included</div></div>
+          </div>
         </div>
         <div class="cheese-add-lbl">Add a cheese</div>
         <div id="cheese-addons"></div>
@@ -329,11 +346,11 @@
   ];
  
   const SAUCES = [
-    { name:"Marinara",       desc:"Classic tomato",  price:0,    free:true,  img:"images/Marinara_Basil_2-nobg.png" },
-    { name:"Spicy Marinara", desc:"Kick up every bite",  price:0,    free:true,  img:"images/Spicy_Marinara-nobg.png"   },
-    { name:"Alfredo",        desc:"Rich & creamy",  price:2.50, free:false, img:"images/Alfredo-nobg.png"          },
-    { name:"BBQ",            desc:"Tangy & bold",  price:2.50, free:false, img:"images/BBQ-nobg.png"              },
-    { name:"Buffalo",        desc:"Spicy, tangy, bold heat",  price:2.50, free:false, img:"images/Buffalo-nobg.png"          }
+    { name:"Marinara",       desc:"Classic slow-cooked tomato",  price:0,    free:true,  img:"images/Marinara_Basil_2-nobg.png" },
+    { name:"Spicy Marinara", desc:"A fiery kick in every bite",  price:0,    free:true,  img:"images/Spicy_Marinara-nobg.png"   },
+    { name:"Alfredo",        desc:"Rich, creamy parmesan base",  price:2.50, free:false, img:"images/Alfredo-nobg.png"          },
+    { name:"BBQ",            desc:"Smoky, tangy, bold",          price:2.50, free:false, img:"images/BBQ-nobg.png"              },
+    { name:"Buffalo",        desc:"Spicy, tangy, bold heat",     price:2.50, free:false, img:"images/Buffalo-nobg.png"          }
   ];
  
   const CHEESE_ADDONS = [
@@ -360,15 +377,14 @@
       { n:"Jalapeños",     p:1.75, img:"images/Jalepeno-nobg.png"           },
       { n:"Green Olives",  p:1.75, img:"images/Green_Olive-nobg.png"        },
       { n:"Spinach",       p:1.75, img:"images/Spinach-nobg.png"            },
-      { n:"Peperoncini",   p:1.75, img:"images/Peperoncini_Peppers-nobg.png"},
-      { n:"Pineapple",     p:1.75, img:"images/Pineapple-nobg.png"          }
-      
+      { n:"Pineapple",     p:1.75, img:"images/Pineapple-nobg.png"          },
+      { n:"Peperoncini",   p:1.75, img:"images/Peperoncini_Peppers-nobg.png"}
     ]}
   ];
  
   let allTops = [];
   TOP_GROUPS.forEach(g => g.items.forEach(t => { t._i = allTops.length; allTops.push(t); }));
-  let ord = { size:0, crust:0, sauce:0, sauceMod:'normal', gbCrust:false, cheeseAddons:{}, cheeseMod:{}, tops:{}, topOrder:[] };
+  let ord = { size:0, crust:0, sauce:0, sauceMod:'normal', gbCrust:false, mozzMod:'normal', cheeseAddons:{}, cheeseMod:{}, tops:{}, topOrder:[] };
  
   /* ── AUTH ── */
   document.getElementById('pw-btn').addEventListener('click', tryPw);
@@ -392,7 +408,7 @@
     return null;
   }
  
-  function init() { renderSizes(); renderCrusts(); renderSauces(); renderGb(); renderCheese(); renderTops(); updateAll(); }
+  function init() { renderSizes(); renderCrusts(); renderSauces(); renderGb(); initMozz(); renderCheese(); renderTops(); updateAll(); }
  
   function renderSizes() {
     const c = document.getElementById('sizes'); c.innerHTML = '';
@@ -506,6 +522,43 @@
     chk.innerHTML = ord.gbCrust ? '<i class="ti ti-check" style="font-size:13px;color:#fff"></i>' : '';
   }
   document.getElementById('gb-card').onclick = () => { ord.gbCrust = !ord.gbCrust; renderGb(); updateAll(); };
+ 
+  function initMozz() {
+    const face = document.getElementById('mozz-face');
+    const badgeWrap = document.getElementById('mozz-badge-wrap');
+    if (!face) return;
+ 
+    function updateMozzBadge() {
+      if (ord.mozzMod === 'light')       badgeWrap.innerHTML = '<span class="badge-light">Light</span>';
+      else if (ord.mozzMod === 'extra')  badgeWrap.innerHTML = '<span class="badge-xtra">Extra +$1.00</span>';
+      else                               badgeWrap.innerHTML = '<div class="mozz-badge">Included</div>';
+      updateAll();
+    }
+ 
+    document.getElementById('mozz-light').addEventListener('click', e => {
+      e.stopPropagation(); ord.mozzMod = 'light'; updateMozzBadge();
+    });
+    document.getElementById('mozz-extra').addEventListener('click', e => {
+      e.stopPropagation(); ord.mozzMod = 'extra'; updateMozzBadge();
+    });
+ 
+    /* swipe */
+    const SNAP = 144;
+    let x0=0,y0=0,dragging=false,open=false,lastDx=0;
+    function snap(o){face.style.transition='transform 0.26s cubic-bezier(0.25,0.46,0.45,0.94)';face.style.transform=o?`translateX(-${SNAP}px)`:'translateX(0)';open=o;setTimeout(()=>{face.style.transition='';},280);}
+    face.addEventListener('pointerdown',e=>{x0=e.clientX;y0=e.clientY;dragging=false;lastDx=0;face.setPointerCapture(e.pointerId);face.style.transition='none';});
+    face.addEventListener('pointermove',e=>{
+      const dx=e.clientX-x0,dy=e.clientY-y0;
+      if(!dragging){if(Math.abs(dx)<5&&Math.abs(dy)<5)return;if(Math.abs(dy)>Math.abs(dx))return;dragging=true;}
+      e.preventDefault();lastDx=dx;
+      face.style.transform=`translateX(${Math.max(-SNAP,Math.min(0,(open?-SNAP:0)+dx))}px)`;
+    },{passive:false});
+    face.addEventListener('pointerup',()=>{
+      if(!dragging){if(open)snap(false);return;}
+      (!open&&lastDx<-40)?snap(true):(open&&lastDx>40)?snap(false):snap(open);
+    });
+    face.addEventListener('pointercancel',()=>snap(open));
+  }
  
   function renderCheese() {
     const c = document.getElementById('cheese-addons'); c.innerHTML = '';
@@ -664,8 +717,15 @@
   function calcTotal() {
     const freeIdx = getFreeIdx();
     let t = SIZES[ord.size].price + SAUCES[ord.sauce].price;
+    if (ord.sauceMod === 'extra') t += 1.00;
     if (ord.gbCrust) t += 2.00;
-    Object.entries(ord.cheeseAddons).forEach(([i, on]) => { if (on) t += CHEESE_ADDONS[i].price; });
+    if (ord.mozzMod === 'extra') t += 1.00;
+    Object.entries(ord.cheeseAddons).forEach(([i, on]) => {
+      if (on) {
+        t += CHEESE_ADDONS[i].price;
+        if (ord.cheeseMod[i] === 'extra') t += 1.00;
+      }
+    });
     Object.entries(ord.tops).forEach(([i, s]) => {
       if (s === 'none') return;
       const tp = allTops[i]; if (!tp) return;
@@ -693,10 +753,20 @@
     const sc = SAUCES[ord.sauce]; const freeIdx = getFreeIdx();
     let h = srow(SIZES[ord.size].name + ' (' + SIZES[ord.size].inch + ')', '$' + SIZES[ord.size].price.toFixed(2));
     h += srow('Crust: ' + CRUSTS[ord.crust].name, 'Included');
-    h += srow('Sauce: ' + sc.name, sc.price > 0 ? '+$' + sc.price.toFixed(2) : 'Included');
+    const saucePriceStr = sc.price > 0 ? '+$' + sc.price.toFixed(2) : 'Included';
+    const sauceModStr = ord.sauceMod === 'extra' ? ' (Extra +$1.00)' : ord.sauceMod === 'light' ? ' (Light)' : '';
+    h += srow('Sauce: ' + sc.name + sauceModStr, ord.sauceMod === 'extra' ? (sc.price > 0 ? '+$' + (sc.price + 1).toFixed(2) : '+$1.00') : saucePriceStr);
     if (ord.gbCrust) h += srow('+ Garlic Butter Crust', '+$2.00');
-    h += srow('Cheese: Mozzarella', 'Included');
-    Object.entries(ord.cheeseAddons).forEach(([i, on]) => { if (on) h += srow('+ ' + CHEESE_ADDONS[i].name, '+$' + CHEESE_ADDONS[i].price.toFixed(2)); });
+    const mozzStr = ord.mozzMod === 'extra' ? 'Included + Extra (+$1.00)' : ord.mozzMod === 'light' ? 'Included (Light)' : 'Included';
+    h += srow('Cheese: Mozzarella', mozzStr);
+    Object.entries(ord.cheeseAddons).forEach(([i, on]) => {
+      if (on) {
+        const cm = ord.cheeseMod[i] || 'normal';
+        const extra = cm === 'extra' ? 1.00 : 0;
+        const modStr = cm === 'extra' ? ' (Extra)' : cm === 'light' ? ' (Light)' : '';
+        h += srow('+ ' + CHEESE_ADDONS[i].name + modStr, '+$' + (CHEESE_ADDONS[i].price + extra).toFixed(2));
+      }
+    });
     ord.topOrder.forEach(i => {
       const s = ord.tops[i]; if (!s || s === 'none') return;
       const tp = allTops[i]; if (!tp) return;
@@ -735,7 +805,7 @@
   function confRow(l, v) { return `<div class="conf-row"><span>${l}</span><span>${v}</span></div>`; }
  
   document.getElementById('reset-btn').addEventListener('click', () => {
-    ord = { size:0, crust:0, sauce:0, sauceMod:'normal', gbCrust:false, cheeseAddons:{}, cheeseMod:{}, tops:{}, topOrder:[] };
+    ord = { size:0, crust:0, sauce:0, sauceMod:'normal', gbCrust:false, mozzMod:'normal', cheeseAddons:{}, cheeseMod:{}, tops:{}, topOrder:[] };
     document.getElementById('conf-screen').style.display = 'none';
     init();
     document.getElementById('scroll-body').scrollTop = 0;
