@@ -772,7 +772,7 @@
       const s = ord.tops[i]; if (!s || s === 'none') return;
       const tp = allTops[i]; if (!tp) return;
       const isFree = i === freeIdx;
-      const tag = s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Easy)' : '';
+      const tag = s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Light)' : '';
       if (s === 'extra') h += srow(tp.n + tag, '+$' + (tp.p * 1.5).toFixed(2));
       else if (isFree) h += `<div class="sum-row"><span class="sum-label">${tp.n}${tag} <span style="font-size:11px;color:#16A34A">✓ included</span></span><span class="sum-val free">$0.00</span></div>`;
       else h += srow(tp.n + tag, '+$' + tp.p.toFixed(2));
@@ -795,7 +795,7 @@
     h += confRow('Cheese', cheeseStr);
     const tList = ord.topOrder.filter(i => ord.tops[i] !== 'none').map(i => {
       const s = ord.tops[i];
-      return allTops[i].n + (s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Easy)' : '') + (i === freeIdx ? ' ✓' : '');
+      return allTops[i].n + (s === 'extra' ? ' (Extra)' : s === 'easy' ? ' (Light)' : '') + (i === freeIdx ? ' ✓' : '');
     });
     if (tList.length) h += confRow('Toppings', tList.join(', '));
     h += '<div class="conf-divider"></div>';
