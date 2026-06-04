@@ -19,7 +19,7 @@ document.getElementById('contact-form').addEventListener('submit', function(even
     // ── CONFIG ──────────────────────────────────────────────
     // After you deploy the Netlify function, paste its URL here.
     // It will look like: https://your-site.netlify.app/.netlify/functions/reviews
-    const PROXY_URL = 'https://YOUR-NETLIFY-SITE.netlify.app/.netlify/functions/reviews';
+    const PROXY_URL = 'https://preeminent-fudge-f8454a.netlify.app/.netlify/functions/reviews';
     // ────────────────────────────────────────────────────────
 
     const grid = document.getElementById('reviews-grid');
