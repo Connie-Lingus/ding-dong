@@ -150,7 +150,7 @@ document.getElementById('contact-form').addEventListener('submit', function(even
             sound.play().catch(function () {});
             setTimeout(function () {
                 form.submit();
-            }, 2800);
+            }, 3000);
         });
     }
 })();
