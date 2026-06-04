@@ -139,3 +139,14 @@ document.getElementById('contact-form').addEventListener('submit', function(even
             .replace(/"/g, '&quot;');
     }
 })();
+// ── DING DONG SUBMIT SOUND ──
+(function () {
+    const sound = new Audio('images/ding-dong_sound.mp3');
+    const btn = document.querySelector('#contact-form button[type="submit"]');
+    if (btn) {
+        btn.addEventListener('click', function () {
+            sound.currentTime = 0;
+            sound.play().catch(function () {});
+        });
+    }
+})();
