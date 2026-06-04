@@ -142,11 +142,15 @@ document.getElementById('contact-form').addEventListener('submit', function(even
 // ── DING DONG SUBMIT SOUND ──
 (function () {
     const sound = new Audio('images/ding-dong_sound.mp3');
-    const btn = document.querySelector('#contact-form button[type="submit"]');
-    if (btn) {
-        btn.addEventListener('click', function () {
+    const form = document.getElementById('contact-form');
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
             sound.currentTime = 0;
             sound.play().catch(function () {});
+            setTimeout(function () {
+                form.submit();
+            }, 1500);
         });
     }
 })();
