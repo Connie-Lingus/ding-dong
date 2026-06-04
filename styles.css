@@ -1,3 +1,7 @@
+/* ============================================
+   BOOTH COMPANY REAL ESTATE — styles.css
+   ============================================ */
+
 * {
     margin: 0;
     padding: 0;
@@ -5,193 +9,211 @@
 }
 
 body {
-    font-family: 'Copperplate', 'Papyrus', fantasy; /* Fallbacks in case Copperplate isn't available */
-    line-height: 1.6;
-    color: #1a5841; /* Dark green */
-    background: #ffffff; /* White */
+    font-family: Georgia, serif;
+    color: #2c2c2c;
+    background: #fff;
+    line-height: 1.7;
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 960px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px;
 }
 
+/* ── HEADER ── */
 header {
-    background: #07402b; /* Darker green */
-    color: #ffffff; /* White */
-    padding: 20px 0;
-    position: fixed;
-    width: 100%;
+    background: #1e4d2b;
+    padding: 16px 0;
+    position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
 }
 
-header h1 {
-    font-size: 28px;
-    float: left;
-    color: #d5bf72; /* Gold */
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.header-logo {
+    height: 64px;
+    width: auto;
+    display: block;
 }
 
 nav ul {
-    float: right;
     list-style: none;
-}
-
-nav ul li {
-    display: inline;
-    margin-left: 20px;
+    display: flex;
+    gap: 28px;
 }
 
 nav ul li a {
+    color: #f0e6c8;
     text-decoration: none;
-    color: #ffffff; /* White */
-    font-size: 16px;
+    font-family: 'Copperplate', serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
 }
 
 nav ul li a:hover {
-    color: #d5bf72; /* Gold */
+    color: #c9a96e;
 }
 
+/* ── HERO / INTRO ── */
 .intro {
-    background: #f5f5f5; /* Light gray for contrast */
-    padding: 100px 0 60px;
-    text-align: center;
-    margin-top: 80px;
-}
-
-.intro h2 {
-    font-size: 32px;
-    color: #07402b; /* Darker green */
-    margin-bottom: 20px;
-}
-
-.intro p {
-    font-size: 18px;
-    max-width: 600px;
-    margin: 0 auto 30px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background: #1a5841; /* Dark green */
-    color: #ffffff; /* White */
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.btn:hover {
-    background: #d5bf72; /* Gold */
-    color: #07402b; /* Darker green */
-}
-
-#contact {
-    padding: 60px 0;
-    text-align: center;
-    background: #ffffff; /* White */
-}
-
-#contact h2 {
-    font-size: 28px;
-    color: #07402b; /* Darker green */
-    margin-bottom: 20px;
-}
-
-#contact p {
-    font-size: 16px;
-    margin-bottom: 30px;
-}
-
-#contact form {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: left;
-}
-
-#contact label {
-    display: block;
-    margin: 10px 0 5px;
-    color: #1a5841; /* Dark green */
-}
-
-#contact input, #contact textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #1a5841; /* Dark green */
-    border-radius: 5px;
-    font-family: Arial, sans-serif; /* Fallback for form inputs */
-}
-
-#contact textarea {
-    resize: vertical;
-}
-
-#form-message {
-    margin-top: 10px;
-    color: #d5bf72; /* Gold */
-}
-
-footer {
-    background: #07402b; /* Darker green */
-    color: #ffffff; /* White */
-    padding: 20px 0;
-    text-align: center;
-}
-
-footer p {
-    font-size: 14px;
-}
-
-footer a {
-    color: #d5bf72; /* Gold */
-    text-decoration: none;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    header h1, nav ul {
-        float: none;
-        text-align: center;
-    }
-
-    nav ul li {
-        display: block;
-        margin: 10px 0;
-    }
-
-    .intro h2 {
-        font-size: 24px;
-    }
-
-    .intro p {
-        font-size: 16px;
-    }
-
-    #contact h2 {
-        font-size: 22px;
-    }
-}
-/* ============================================
-   GOOGLE REVIEWS SECTION — append to styles.css
-   ============================================ */
-
-.reviews-section {
     background: #f9f7f4;
     padding: 80px 0;
     text-align: center;
+    border-bottom: 1px solid #e8e3db;
+}
+
+.intro h2 {
+    font-family: 'Copperplate', serif;
+    font-size: 1.9rem;
+    color: #1e4d2b;
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+}
+
+.intro p {
+    font-size: 1.05rem;
+    color: #555;
+    max-width: 680px;
+    margin: 0 auto 36px;
+}
+
+/* ── BUTTONS ── */
+.btn {
+    display: inline-block;
+    background: #1e4d2b;
+    color: #f0e6c8;
+    padding: 14px 36px;
+    border-radius: 4px;
+    font-family: 'Copperplate', serif;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+    background: #15381f;
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #c9a96e;
+    color: #c9a96e;
+    padding: 12px 32px;
+    border-radius: 4px;
+    font-family: 'Copperplate', serif;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-outline:hover {
+    background: #c9a96e;
+    color: #fff;
+}
+
+/* ── PROFILE ── */
+.profile-section {
+    background: #fff;
+    padding: 72px 0;
+    border-bottom: 1px solid #e8e3db;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.profile-photo-wrap {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #c9a96e;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-name {
+    font-family: 'Copperplate', serif;
+    font-size: 1.8rem;
+    color: #1e4d2b;
+    margin: 0 0 14px;
+    letter-spacing: 0.02em;
+}
+
+.profile-licenses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.license-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #8a7355;
+    background: #f7f2ea;
+    border: 1px solid #e0d4bc;
+    border-radius: 4px;
+    padding: 5px 12px;
+}
+
+.profile-quote {
+    margin: 0;
+    padding: 0 0 0 20px;
+    border-left: 3px solid #c9a96e;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #555;
+    line-height: 1.7;
+}
+
+/* ── REVIEWS ── */
+.reviews-section {
+    background: #f9f7f4;
+    padding: 72px 0;
+    text-align: center;
+    border-bottom: 1px solid #e8e3db;
 }
 
 .reviews-section h2 {
     font-family: 'Copperplate', serif;
-    font-size: 2rem;
-    color: #2c2c2c;
+    font-size: 1.9rem;
+    color: #1e4d2b;
     margin-bottom: 8px;
 }
 
@@ -202,7 +224,6 @@ footer a:hover {
     letter-spacing: 0.04em;
 }
 
-/* --- Overall Rating Summary Bar --- */
 .reviews-summary {
     display: flex;
     align-items: center;
@@ -219,9 +240,7 @@ footer a:hover {
     line-height: 1;
 }
 
-.reviews-summary .summary-right {
-    text-align: left;
-}
+.reviews-summary .summary-right { text-align: left; }
 
 .reviews-summary .stars-row {
     display: flex;
@@ -229,9 +248,7 @@ footer a:hover {
     margin-bottom: 4px;
 }
 
-.reviews-summary .star {
-    font-size: 1.4rem;
-}
+.reviews-summary .star { font-size: 1.4rem; color: #f4b400; }
 
 .reviews-summary .summary-count {
     color: #888;
@@ -247,12 +264,8 @@ footer a:hover {
     margin-top: 6px;
 }
 
-.reviews-summary .google-badge svg {
-    width: 18px;
-    height: 18px;
-}
+.reviews-summary .google-badge svg { width: 18px; height: 18px; }
 
-/* --- Reviews Grid --- */
 .reviews-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -261,7 +274,6 @@ footer a:hover {
     text-align: left;
 }
 
-/* --- Individual Review Card --- */
 .review-card {
     background: #fff;
     border: 1px solid #e8e3db;
@@ -280,10 +292,7 @@ footer a:hover {
 }
 
 @keyframes cardReveal {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .review-card:nth-child(1) { animation-delay: 0.05s; }
@@ -303,10 +312,10 @@ footer a:hover {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #c9a96e;
-    color: #fff;
+    background: #1e4d2b;
+    color: #f0e6c8;
     font-family: 'Copperplate', serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -320,10 +329,7 @@ footer a:hover {
     object-fit: cover;
 }
 
-.reviewer-info {
-    flex: 1;
-    min-width: 0;
-}
+.reviewer-info { flex: 1; min-width: 0; }
 
 .reviewer-name {
     font-weight: 600;
@@ -346,10 +352,7 @@ footer a:hover {
     margin-bottom: 10px;
 }
 
-.review-stars .star {
-    font-size: 1rem;
-    color: #f4b400;
-}
+.review-stars .star { font-size: 1rem; color: #f4b400; }
 
 .review-text {
     font-size: 0.92rem;
@@ -375,7 +378,6 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* --- Loading State --- */
 .reviews-loading {
     grid-column: 1 / -1;
     display: flex;
@@ -395,11 +397,8 @@ footer a:hover {
     animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-/* --- Error State --- */
 .reviews-error {
     grid-column: 1 / -1;
     text-align: center;
@@ -408,32 +407,114 @@ footer a:hover {
     font-size: 0.95rem;
 }
 
-/* --- Leave a Review Button --- */
-.btn-outline {
-    background: transparent;
-    border: 2px solid #c9a96e;
-    color: #c9a96e;
-    padding: 12px 32px;
-    border-radius: 4px;
+/* ── CONTACT ── */
+#contact {
+    background: #fff;
+    padding: 72px 0;
+}
+
+#contact h2 {
     font-family: 'Copperplate', serif;
+    font-size: 1.9rem;
+    color: #1e4d2b;
+    margin-bottom: 12px;
+}
+
+#contact p {
+    color: #555;
+    margin-bottom: 32px;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 560px;
+}
+
+#contact-form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #444;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+#contact-form input,
+#contact-form textarea {
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: Georgia, serif;
+    color: #2c2c2c;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+    outline: none;
+    border-color: #1e4d2b;
+}
+
+#contact-form button {
+    align-self: flex-start;
+    margin-top: 8px;
+}
+
+#form-message {
+    margin-top: 12px;
+    color: #1e4d2b;
+    font-size: 0.95rem;
+}
+
+/* ── FOOTER ── */
+footer {
+    background: #1e4d2b;
+    color: #c8d8c0;
+    padding: 40px 0;
     font-size: 0.9rem;
-    letter-spacing: 0.05em;
+    line-height: 2;
+}
+
+footer a {
+    color: #c9a96e;
     text-decoration: none;
-    display: inline-block;
-    transition: background 0.2s ease, color 0.2s ease;
 }
 
-.btn-outline:hover {
-    background: #c9a96e;
-    color: #fff;
-}
+footer a:hover { text-decoration: underline; }
 
-/* --- Responsive --- */
-@media (max-width: 600px) {
-    .reviews-grid {
-        grid-template-columns: 1fr;
+/* ── MOBILE ── */
+@media (max-width: 680px) {
+    .header-logo { height: 48px; }
+
+    nav ul { gap: 16px; }
+    nav ul li a { font-size: 0.75rem; }
+
+    .intro { padding: 56px 0; }
+    .intro h2 { font-size: 1.4rem; }
+
+    .profile-section { padding: 56px 0; }
+    .profile-card {
+        flex-direction: column;
+        gap: 28px;
+        text-align: center;
     }
-    .reviews-summary .summary-score {
-        font-size: 3rem;
+    .profile-photo-wrap { width: 150px; height: 150px; }
+    .profile-name { font-size: 1.4rem; }
+    .profile-licenses { justify-content: center; }
+    .profile-quote {
+        border-left: none;
+        border-top: 3px solid #c9a96e;
+        padding: 18px 0 0;
     }
+
+    .reviews-section { padding: 56px 0; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .reviews-summary .summary-score { font-size: 3rem; }
+
+    #contact { padding: 56px 0; }
+    #contact-form button { align-self: stretch; text-align: center; }
 }
