@@ -12,7 +12,9 @@
 <body>
     <header>
         <div class="container">
-            <h1>Booth Company Real Estate</h1>
+            <a href="#home" class="logo-link">
+                <img src="BCRE_Cover_4.png" alt="Booth Company Real Estate" class="header-logo">
+            </a>
             <nav>
                 <ul>
                     <li><a href="#home">Home</a></li>
@@ -22,6 +24,7 @@
             </nav>
         </div>
     </header>
+
     <section id="home" class="intro">
         <div class="container">
             <h2>Welcome to Booth Company Real Estate</h2>
@@ -30,14 +33,33 @@
         </div>
     </section>
 
-    <!-- ===== GOOGLE REVIEWS SECTION ===== -->
+    <!-- PROFILE -->
+    <section id="profile" class="profile-section">
+        <div class="container">
+            <div class="profile-card">
+                <div class="profile-photo-wrap">
+                    <img src="XprofilePic2-nobg.PNG" alt="Adam Booth" class="profile-photo">
+                </div>
+                <div class="profile-info">
+                    <h2 class="profile-name">Adam Booth</h2>
+                    <div class="profile-licenses">
+                        <span class="license-badge">Brokerage Lic&nbsp;#&nbsp;2024035110</span>
+                        <span class="license-badge">Salesperson Lic&nbsp;#&nbsp;2021004797</span>
+                    </div>
+                    <blockquote class="profile-quote">
+                        "I started this business to drive results by keeping things simple."
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GOOGLE REVIEWS -->
     <section id="reviews" class="reviews-section">
         <div class="container">
             <h2>What Our Clients Say</h2>
             <p class="reviews-subtitle">Real experiences from real homeowners</p>
-            <div class="reviews-summary" id="reviews-summary">
-                <!-- Populated by JS -->
-            </div>
+            <div class="reviews-summary" id="reviews-summary"></div>
             <div class="reviews-grid" id="reviews-grid">
                 <div class="reviews-loading">
                     <div class="loading-spinner"></div>
@@ -45,18 +67,16 @@
                 </div>
             </div>
             <a
-                href="https://search.google.com/local/writereview?placeid=ChIJR1FRhKFVwIcR700cMOnYfjY"
+                href="https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="btn btn-outline"
                 id="leave-review-btn"
-            >
-                Leave Us a Review
-            </a>
+            >Leave Us a Review</a>
         </div>
     </section>
-    <!-- ===== END REVIEWS SECTION ===== -->
 
+    <!-- CONTACT -->
     <section id="contact">
         <div class="container">
             <h2>Let's Connect</h2>
@@ -64,24 +84,25 @@
             <form id="contact-form" action="https://formspree.io/f/xanjvddz" method="POST">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
-                
+
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
-                
+
                 <label for="phone">Phone</label>
                 <input type="tel" id="phone" name="phone">
-                
+
                 <label for="message">Tell Us About Your Real Property</label>
                 <textarea id="message" name="message" rows="5"></textarea>
                 <div style="display:none">
                     <input type="text" name="_gotcha">
                 </div>
-                
+
                 <button type="submit" class="btn">Submit</button>
             </form>
             <p id="form-message"></p>
         </div>
     </section>
+
     <footer>
         <div class="container">
             <p>© 2025 Booth Company Real Estate. All rights reserved.</p>
