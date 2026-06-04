@@ -7,13 +7,14 @@
     <meta name="keywords" content="real estate, sell home, save money, Booth Company Real Estate">
     <title>Booth Company Real Estate</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Copperplate&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <header>
-        <div class="container">
+        <div class="container header-inner">
             <a href="#home" class="logo-link">
-                <img src="BCRE_Cover_4.png" alt="Booth Company Real Estate" class="header-logo">
+                <img src="images/BCRE Cover 4.png" alt="Booth Company Real Estate" class="header-logo">
             </a>
             <nav>
                 <ul>
@@ -25,40 +26,41 @@
         </div>
     </header>
 
-    <section id="home" class="intro">
-        <div class="container">
-            <h2>Welcome to Booth Company Real Estate</h2>
-            <p>At Booth Company Real Estate, we make selling your home simple and cost-effective. We will show you how our streamlined process cuts out unnecessary fees, saving you thousands while ensuring a smooth, professional sale. With our personalized service, we help you keep moving forward.</p>
+    <!-- HERO -->
+    <section id="home" class="hero">
+        <div class="container hero-inner">
+            <p class="hero-eyebrow">Richmond, Missouri</p>
+            <h1>Sell Smarter.<br>Keep More.</h1>
+            <p class="hero-sub">We cut the unnecessary fees other agents charge — so you walk away with more money in your pocket.</p>
             <a href="#contact" class="btn">Get a Free Consultation</a>
         </div>
     </section>
 
     <!-- PROFILE -->
     <section id="profile" class="profile-section">
-        <div class="container">
-            <div class="profile-card">
-                <div class="profile-photo-wrap">
-                    <img src="XprofilePic2-nobg.PNG" alt="Adam Booth" class="profile-photo">
+        <div class="container profile-inner">
+            <div class="profile-photo-wrap">
+                <img src="images/XprofilePic2-nobg.PNG" alt="Adam Booth" class="profile-photo">
+            </div>
+            <div class="profile-info">
+                <p class="profile-label">Your Agent</p>
+                <h2 class="profile-name">Adam Booth</h2>
+                <div class="profile-licenses">
+                    <span class="license-badge">Brokerage Lic&nbsp;#&nbsp;2024035110</span>
+                    <span class="license-badge">Salesperson Lic&nbsp;#&nbsp;2021004797</span>
                 </div>
-                <div class="profile-info">
-                    <h2 class="profile-name">Adam Booth</h2>
-                    <div class="profile-licenses">
-                        <span class="license-badge">Brokerage Lic&nbsp;#&nbsp;2024035110</span>
-                        <span class="license-badge">Salesperson Lic&nbsp;#&nbsp;2021004797</span>
-                    </div>
-                    <blockquote class="profile-quote">
-                        "I started this business to drive results by keeping things simple."
-                    </blockquote>
-                </div>
+                <blockquote class="profile-quote">
+                    "I started this business to drive results by keeping things simple."
+                </blockquote>
             </div>
         </div>
     </section>
 
-    <!-- GOOGLE REVIEWS -->
+    <!-- REVIEWS -->
     <section id="reviews" class="reviews-section">
         <div class="container">
-            <h2>What Our Clients Say</h2>
-            <p class="reviews-subtitle">Real experiences from real homeowners</p>
+            <p class="section-eyebrow">Google Reviews</p>
+            <h2 class="section-title">What Our Clients Say</h2>
             <div class="reviews-summary" id="reviews-summary"></div>
             <div class="reviews-grid" id="reviews-grid">
                 <div class="reviews-loading">
@@ -66,37 +68,39 @@
                     <p>Loading reviews...</p>
                 </div>
             </div>
-            <a
-                href="https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn btn-outline"
-                id="leave-review-btn"
-            >Leave Us a Review</a>
+            <a href="https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID"
+               target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                Leave Us a Review
+            </a>
         </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact">
+    <section id="contact" class="contact-section">
         <div class="container">
-            <h2>Let's Connect</h2>
-            <p>Interested in saving money on your home sale? Fill out the form below, and we'll reach out to discuss how we can help.</p>
+            <p class="section-eyebrow">Get in Touch</p>
+            <h2 class="section-title">Let's Connect</h2>
+            <p class="section-sub">Interested in saving money on your home sale? Fill out the form and we'll be in touch.</p>
             <form id="contact-form" action="https://formspree.io/f/xanjvddz" method="POST">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="phone">Phone</label>
-                <input type="tel" id="phone" name="phone">
-
-                <label for="message">Tell Us About Your Real Property</label>
-                <textarea id="message" name="message" rows="5"></textarea>
-                <div style="display:none">
-                    <input type="text" name="_gotcha">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
                 </div>
-
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="message">Tell Us About Your Property</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                </div>
+                <div style="display:none"><input type="text" name="_gotcha"></div>
                 <button type="submit" class="btn">Submit</button>
             </form>
             <p id="form-message"></p>
@@ -104,13 +108,16 @@
     </section>
 
     <footer>
-        <div class="container">
-            <p>© 2025 Booth Company Real Estate. All rights reserved.</p>
-            <p>106 W North Main Street, Richmond, MO 64085</p>
-            <p>Email: <a href="mailto:abooth.mailbox@gmail.com">abooth.mailbox@gmail.com</a></p>
-            <p>Phone: (816) 319-2693</p>
+        <div class="container footer-inner">
+            <img src="images/BCRE Cover 4.png" alt="Booth Company Real Estate" class="footer-logo">
+            <div class="footer-details">
+                <p>106 W North Main Street, Richmond, MO 64085</p>
+                <p><a href="mailto:abooth.mailbox@gmail.com">abooth.mailbox@gmail.com</a> &nbsp;·&nbsp; <a href="tel:8163192693">(816) 319-2693</a></p>
+                <p class="footer-copy">© 2025 Booth Company Real Estate. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
