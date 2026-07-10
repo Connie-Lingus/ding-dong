@@ -199,14 +199,8 @@
                             <input type="text" id="monthly_rent" name="Monthly Rent (Property)" inputmode="decimal" placeholder="$" required>
                         </div>
                         <div class="form-group">
-                            <label for="lease_term">Lease Term <span class="req">*</span></label>
-                            <select id="lease_term" name="Lease Term" required>
-                                <option value="12 months" selected>12 months</option>
-                                <option value="6 months">6 months</option>
-                                <option value="Month-to-month">Month-to-month</option>
-                                <option value="24 months">24 months</option>
-                                <option value="Other">Other</option>
-                            </select>
+                            <label for="lease_term">Lease Term</label>
+                            <input type="text" id="lease_term" name="Lease Term" value="12 months" readonly required>
                         </div>
                     </div>
                 </fieldset>
