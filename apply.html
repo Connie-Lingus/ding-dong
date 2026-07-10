@@ -129,6 +129,10 @@
         @media (max-width: 700px) {
             .form-row.thirds, .form-row.three { grid-template-columns: 1fr; gap: 0; }
             .fee-banner { flex-direction: column; gap: 8px; }
+            /* 16px minimum stops iOS Safari from auto-zooming when a field is tapped. */
+            #lease-form input,
+            #lease-form select,
+            #lease-form textarea { font-size: 16px; }
         }
     </style>
 </head>
