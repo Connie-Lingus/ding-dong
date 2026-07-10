@@ -184,8 +184,9 @@
                     <legend>Property Information</legend>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="property_address">Property Address Applying For <span class="req">*</span></label>
-                            <input type="text" id="property_address" name="Property Address Applying For" required>
+                            <label for="property_address">Property Address Applying For</label>
+                            <input type="text" id="property_address" name="Property Address Applying For"
+                                   value="38552 W 136th St, Richmond, MO" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="move_in">Desired Move-In Date <span class="req">*</span></label>
@@ -518,6 +519,13 @@
                         <span class="yn-options">
                             <label><input type="radio" name="Smoker" value="Yes" required> Yes</label>
                             <label><input type="radio" name="Smoker" value="No"> No</label>
+                        </span>
+                    </div>
+                    <div class="yn-row">
+                        <span class="yn-q">Do you own pets?</span>
+                        <span class="yn-options">
+                            <label><input type="radio" name="Owns Pets" value="Yes" required> Yes</label>
+                            <label><input type="radio" name="Owns Pets" value="No"> No</label>
                         </span>
                     </div>
 
