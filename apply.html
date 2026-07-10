@@ -170,14 +170,16 @@
                 </span>
             </div>
 
-            <!-- Netlify Forms: name + data-netlify enable capture & email notifications.
-                 Honeypot "bot-field" filters spam. Submission is sent via JS (see bottom),
-                 then the applicant is redirected to the Stripe payment page. -->
+            <!-- Formspree capture (works on GitHub Pages, which is static-only).
+                 Submitted via JS below, then the applicant is redirected to Stripe.
+                 "_subject" sets the notification email subject; "_gotcha" is the spam honeypot. -->
             <form id="lease-form" name="lease-application" method="POST"
-                  data-netlify="true" netlify-honeypot="bot-field">
-                <input type="hidden" name="form-name" value="lease-application">
-                <p style="display:none">
-                    <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                  action="https://formspree.io/f/xanjvddz">
+                <input type="hidden" name="_subject" value="New Rental Application — 38552 W 136th St">
+                <p style="display:none" aria-hidden="true">
+                    <label>Don't fill this out if you're human:
+                        <input name="_gotcha" tabindex="-1" autocomplete="off">
+                    </label>
                 </p>
 
                 <!-- PROPERTY INFORMATION -->
@@ -610,12 +612,11 @@
             status.className = 'working';
             status.textContent = 'Submitting your application…';
 
-            var body = new URLSearchParams(new FormData(form)).toString();
-
-            fetch('/', {
+            // Formspree accepts multipart FormData and returns JSON when asked.
+            fetch(form.action, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: body
+                headers: { 'Accept': 'application/json' },
+                body: new FormData(form)
             })
             .then(function (res) {
                 if (!res.ok) throw new Error('Submission failed (' + res.status + ')');
