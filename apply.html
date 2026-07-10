@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Residential rental application for Booth Company Real Estate. Apply to rent a property — $50 application fee.">
+    <meta name="robots" content="noindex">
+    <title>Rental Application — Booth Company Real Estate</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ── APPLICATION PAGE (scoped additions to styles.css) ── */
+        .apply-section { background: #fff; padding: 56px 0 90px; }
+
+        .apply-intro { max-width: 720px; margin-bottom: 8px; }
+
+        .fee-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--green-dark);
+            color: var(--gold-light);
+            border-radius: 4px;
+            padding: 20px 24px;
+            margin: 28px 0 44px;
+            max-width: 720px;
+        }
+        .fee-banner .fee-amount {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.1rem;
+            font-weight: 600;
+            color: var(--gold);
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .fee-banner .fee-text { font-size: 0.9rem; line-height: 1.6; font-weight: 300; }
+        .fee-banner .fee-text strong { color: #fff; font-weight: 500; }
+
+        #lease-form { max-width: 720px; }
+
+        fieldset {
+            border: none;
+            border-top: 1px solid var(--border);
+            padding: 36px 0 8px;
+            margin: 0;
+        }
+        fieldset.first { border-top: none; padding-top: 8px; }
+
+        legend {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.55rem;
+            font-weight: 600;
+            color: var(--green-dark);
+            padding: 0;
+            margin-bottom: 4px;
+        }
+        .fieldset-sub {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 22px;
+        }
+        .subgroup-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            margin: 8px 0 16px;
+        }
+
+        .form-row.thirds { grid-template-columns: 2fr 1fr 1fr; }
+        .form-row.three  { grid-template-columns: 1fr 1fr 1fr; }
+
+        .form-group select {
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            font-size: 0.95rem;
+            font-family: 'Jost', sans-serif;
+            font-weight: 300;
+            color: var(--text-dark);
+            background: #fff;
+            width: 100%;
+        }
+        .form-group select:focus { outline: none; border-color: var(--green-dark); }
+
+        .req { color: #b23b3b; }
+
+        /* Yes / No background questions */
+        .yn-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .yn-row:last-of-type { border-bottom: none; }
+        .yn-q { font-size: 0.95rem; color: var(--text-dark); flex: 1; min-width: 220px; }
+        .yn-options { display: flex; gap: 22px; }
+        .yn-options label {
+            display: flex; align-items: center; gap: 7px;
+            font-size: 0.9rem; color: var(--text-mid); cursor: pointer;
+            text-transform: none; letter-spacing: 0;
+        }
+        .yn-options input[type="radio"] { width: 16px; height: 16px; accent-color: var(--green-dark); cursor: pointer; }
+
+        .certify {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 18px 20px;
+            margin: 6px 0 24px;
+        }
+        .certify input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--green-dark); flex-shrink: 0; cursor: pointer; }
+        .certify label { font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+
+        .submit-note { font-size: 0.82rem; color: var(--text-light); margin-top: 14px; max-width: 520px; }
+        #form-status { margin-top: 16px; font-size: 0.92rem; min-height: 1.2em; }
+        #form-status.error { color: #b23b3b; }
+        #form-status.working { color: var(--text-mid); }
+
+        button[disabled] { opacity: 0.55; cursor: not-allowed; }
+
+        @media (max-width: 700px) {
+            .form-row.thirds, .form-row.three { grid-template-columns: 1fr; gap: 0; }
+            .fee-banner { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="index.html#home" class="logo-link">
+                <img src="images/BCRE Cover 4.png" alt="Booth Company Real Estate" class="header-logo">
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html#home">Home</a></li>
+                    <li><a href="index.html#reviews">Reviews</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="apply-section">
+        <div class="container">
+            <div class="apply-intro">
+                <p class="section-eyebrow">Residential Rental Application</p>
+                <h1 class="section-title">Apply to Rent a Property</h1>
+                <p class="section-sub">Complete the application below. All required fields must be filled before you can submit. After you submit, you'll be taken to a secure payment page for the application fee.</p>
+            </div>
+
+            <div class="fee-banner">
+                <span class="fee-amount">$50</span>
+                <span class="fee-text">
+                    A <strong>$50.00 application fee</strong> is due upon submission, paid securely by card. This fee is
+                    <strong>non-refundable</strong>. Submission of this application is not a guarantee of acceptance.
+                </span>
+            </div>
+
+            <!-- Netlify Forms: name + data-netlify enable capture & email notifications.
+                 Honeypot "bot-field" filters spam. Submission is sent via JS (see bottom),
+                 then the applicant is redirected to the Stripe payment page. -->
+            <form id="lease-form" name="lease-application" method="POST"
+                  data-netlify="true" netlify-honeypot="bot-field">
+                <input type="hidden" name="form-name" value="lease-application">
+                <p style="display:none">
+                    <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                </p>
+
+                <!-- PROPERTY INFORMATION -->
+                <fieldset class="first">
+                    <legend>Property Information</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="property_address">Property Address Applying For <span class="req">*</span></label>
+                            <input type="text" id="property_address" name="Property Address Applying For" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="move_in">Desired Move-In Date <span class="req">*</span></label>
+                            <input type="date" id="move_in" name="Desired Move-In Date" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="monthly_rent">Monthly Rent <span class="req">*</span></label>
+                            <input type="text" id="monthly_rent" name="Monthly Rent (Property)" inputmode="decimal" placeholder="$" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lease_term">Lease Term <span class="req">*</span></label>
+                            <select id="lease_term" name="Lease Term" required>
+                                <option value="12 months" selected>12 months</option>
+                                <option value="6 months">6 months</option>
+                                <option value="Month-to-month">Month-to-month</option>
+                                <option value="24 months">24 months</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- APPLICANT INFORMATION -->
+                <fieldset>
+                    <legend>Applicant Information</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="full_name">Full Legal Name <span class="req">*</span></label>
+                            <input type="text" id="full_name" name="Full Legal Name" autocomplete="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth <span class="req">*</span></label>
+                            <input type="date" id="dob" name="Date of Birth" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="form-row thirds">
+                        <div class="form-group">
+                            <label for="ssn">Social Security Number <span class="req">*</span></label>
+                            <input type="text" id="ssn" name="Social Security Number" inputmode="numeric"
+                                   autocomplete="off" placeholder="XXX-XX-XXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dl">Driver's License # <span class="req">*</span></label>
+                            <input type="text" id="dl" name="Driver's License Number" autocomplete="off" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dl_state">License State <span class="req">*</span></label>
+                            <input type="text" id="dl_state" name="Driver's License State" maxlength="2" placeholder="MO" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number <span class="req">*</span></label>
+                            <input type="tel" id="phone" name="Phone Number" autocomplete="tel" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="req">*</span></label>
+                            <input type="email" id="email" name="Email Address" autocomplete="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cur_addr">Current Home Address <span class="req">*</span></label>
+                        <input type="text" id="cur_addr" name="Current Home Address" autocomplete="street-address" required>
+                    </div>
+                    <div class="form-row thirds">
+                        <div class="form-group">
+                            <label for="cur_city">City <span class="req">*</span></label>
+                            <input type="text" id="cur_city" name="Current City" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cur_state">State <span class="req">*</span></label>
+                            <input type="text" id="cur_state" name="Current State" maxlength="2" placeholder="MO" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cur_zip">ZIP <span class="req">*</span></label>
+                            <input type="text" id="cur_zip" name="Current ZIP" inputmode="numeric" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- RESIDENCE HISTORY -->
+                <fieldset>
+                    <legend>Residence History</legend>
+                    <p class="subgroup-label">Current Residence</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cur_ll">Landlord / Property Manager Name <span class="req">*</span></label>
+                            <input type="text" id="cur_ll" name="Current Landlord Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cur_ll_phone">Landlord Phone <span class="req">*</span></label>
+                            <input type="tel" id="cur_ll_phone" name="Current Landlord Phone" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cur_res_rent">Monthly Rent <span class="req">*</span></label>
+                            <input type="text" id="cur_res_rent" name="Current Residence Monthly Rent" inputmode="decimal" placeholder="$" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cur_dates">Dates Lived (From – To) <span class="req">*</span></label>
+                            <input type="text" id="cur_dates" name="Current Residence Dates" placeholder="MM/YYYY – Present" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cur_reason">Reason for Leaving <span class="req">*</span></label>
+                        <input type="text" id="cur_reason" name="Current Residence Reason for Leaving" required>
+                    </div>
+
+                    <p class="subgroup-label" style="margin-top:24px;">Previous Residence <span style="color:var(--text-light);text-transform:none;letter-spacing:0;font-weight:300;">(if applicable)</span></p>
+                    <div class="form-group">
+                        <label for="prev_addr">Address</label>
+                        <input type="text" id="prev_addr" name="Previous Residence Address">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prev_ll">Landlord / Property Manager Name</label>
+                            <input type="text" id="prev_ll" name="Previous Landlord Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="prev_ll_phone">Landlord Phone</label>
+                            <input type="tel" id="prev_ll_phone" name="Previous Landlord Phone">
+                        </div>
+                    </div>
+                    <div class="form-row three">
+                        <div class="form-group">
+                            <label for="prev_rent">Monthly Rent</label>
+                            <input type="text" id="prev_rent" name="Previous Residence Monthly Rent" inputmode="decimal" placeholder="$">
+                        </div>
+                        <div class="form-group">
+                            <label for="prev_dates">Dates Lived (From – To)</label>
+                            <input type="text" id="prev_dates" name="Previous Residence Dates">
+                        </div>
+                        <div class="form-group">
+                            <label for="prev_reason">Reason for Leaving</label>
+                            <input type="text" id="prev_reason" name="Previous Residence Reason for Leaving">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- EMPLOYMENT & INCOME -->
+                <fieldset>
+                    <legend>Employment &amp; Income</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="employer">Current Employer <span class="req">*</span></label>
+                            <input type="text" id="employer" name="Current Employer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position / Title <span class="req">*</span></label>
+                            <input type="text" id="position" name="Position / Title" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="supervisor">Supervisor Name <span class="req">*</span></label>
+                            <input type="text" id="supervisor" name="Supervisor Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="employer_phone">Employer Phone <span class="req">*</span></label>
+                            <input type="tel" id="employer_phone" name="Employer Phone" required>
+                        </div>
+                    </div>
+                    <div class="form-row thirds">
+                        <div class="form-group">
+                            <label for="emp_length">Length of Employment <span class="req">*</span></label>
+                            <input type="text" id="emp_length" name="Length of Employment" placeholder="e.g. 3 years" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gross_income">Gross Monthly Income <span class="req">*</span></label>
+                            <input type="text" id="gross_income" name="Gross Monthly Income" inputmode="decimal" placeholder="$" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pay_freq">Pay Frequency <span class="req">*</span></label>
+                            <select id="pay_freq" name="Pay Frequency" required>
+                                <option value="" selected disabled>Select…</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Bi-weekly">Bi-weekly</option>
+                                <option value="Semi-monthly">Semi-monthly</option>
+                                <option value="Monthly">Monthly</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="add_income_src">Additional Income Source <span style="color:var(--text-light);">(if any)</span></label>
+                            <input type="text" id="add_income_src" name="Additional Income Source">
+                        </div>
+                        <div class="form-group">
+                            <label for="add_income_amt">Additional Monthly Amount</label>
+                            <input type="text" id="add_income_amt" name="Additional Monthly Amount" inputmode="decimal" placeholder="$">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- OTHER OCCUPANTS -->
+                <fieldset>
+                    <legend>Other Occupants</legend>
+                    <p class="fieldset-sub">List anyone else who will live in the property. Leave blank if none.</p>
+                    <div class="form-row thirds">
+                        <div class="form-group">
+                            <label for="occ1_name">Full Name</label>
+                            <input type="text" id="occ1_name" name="Occupant 1 Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="occ1_age">Age</label>
+                            <input type="text" id="occ1_age" name="Occupant 1 Age" inputmode="numeric">
+                        </div>
+                        <div class="form-group">
+                            <label for="occ1_rel">Relationship</label>
+                            <input type="text" id="occ1_rel" name="Occupant 1 Relationship">
+                        </div>
+                    </div>
+                    <div class="form-row thirds">
+                        <div class="form-group">
+                            <label for="occ2_name">Full Name</label>
+                            <input type="text" id="occ2_name" name="Occupant 2 Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="occ2_age">Age</label>
+                            <input type="text" id="occ2_age" name="Occupant 2 Age" inputmode="numeric">
+                        </div>
+                        <div class="form-group">
+                            <label for="occ2_rel">Relationship</label>
+                            <input type="text" id="occ2_rel" name="Occupant 2 Relationship">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- VEHICLES -->
+                <fieldset>
+                    <legend>Vehicles</legend>
+                    <p class="fieldset-sub">List vehicles that will be parked at the property. Leave blank if none.</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="veh1">Vehicle Make / Model</label>
+                            <input type="text" id="veh1" name="Vehicle 1 Make/Model">
+                        </div>
+                        <div class="form-group">
+                            <label for="veh1_plate">License Plate #</label>
+                            <input type="text" id="veh1_plate" name="Vehicle 1 Plate">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="veh2">Vehicle Make / Model</label>
+                            <input type="text" id="veh2" name="Vehicle 2 Make/Model">
+                        </div>
+                        <div class="form-group">
+                            <label for="veh2_plate">License Plate #</label>
+                            <input type="text" id="veh2_plate" name="Vehicle 2 Plate">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- EMERGENCY CONTACT -->
+                <fieldset>
+                    <legend>Emergency Contact</legend>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ec_name">Full Name <span class="req">*</span></label>
+                            <input type="text" id="ec_name" name="Emergency Contact Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ec_rel">Relationship <span class="req">*</span></label>
+                            <input type="text" id="ec_rel" name="Emergency Contact Relationship" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ec_phone">Phone Number <span class="req">*</span></label>
+                            <input type="tel" id="ec_phone" name="Emergency Contact Phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ec_addr">Address <span class="req">*</span></label>
+                            <input type="text" id="ec_addr" name="Emergency Contact Address" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- PERSONAL REFERENCE -->
+                <fieldset>
+                    <legend>Personal Reference</legend>
+                    <div class="form-row thirds">
+                        <div class="form-group">
+                            <label for="ref_name">Full Name <span class="req">*</span></label>
+                            <input type="text" id="ref_name" name="Reference Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ref_rel">Relationship <span class="req">*</span></label>
+                            <input type="text" id="ref_rel" name="Reference Relationship" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ref_phone">Phone Number <span class="req">*</span></label>
+                            <input type="tel" id="ref_phone" name="Reference Phone" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- BACKGROUND INFORMATION -->
+                <fieldset>
+                    <legend>Background Information</legend>
+                    <p class="fieldset-sub">Please answer each question. <span class="req">*</span></p>
+
+                    <div class="yn-row">
+                        <span class="yn-q">Have you ever been evicted from a rental property?</span>
+                        <span class="yn-options">
+                            <label><input type="radio" name="Ever Evicted" value="Yes" required> Yes</label>
+                            <label><input type="radio" name="Ever Evicted" value="No"> No</label>
+                        </span>
+                    </div>
+                    <div class="yn-row">
+                        <span class="yn-q">Have you ever been convicted of a felony?</span>
+                        <span class="yn-options">
+                            <label><input type="radio" name="Ever Convicted of Felony" value="Yes" required> Yes</label>
+                            <label><input type="radio" name="Ever Convicted of Felony" value="No"> No</label>
+                        </span>
+                    </div>
+                    <div class="yn-row">
+                        <span class="yn-q">Have you ever filed for bankruptcy?</span>
+                        <span class="yn-options">
+                            <label><input type="radio" name="Ever Filed Bankruptcy" value="Yes" required> Yes</label>
+                            <label><input type="radio" name="Ever Filed Bankruptcy" value="No"> No</label>
+                        </span>
+                    </div>
+                    <div class="yn-row">
+                        <span class="yn-q">Do you smoke?</span>
+                        <span class="yn-options">
+                            <label><input type="radio" name="Smoker" value="Yes" required> Yes</label>
+                            <label><input type="radio" name="Smoker" value="No"> No</label>
+                        </span>
+                    </div>
+
+                    <div class="form-group" style="margin-top:22px;">
+                        <label for="bg_explain">If yes to any of the above, please explain</label>
+                        <textarea id="bg_explain" name="Background Explanation" rows="3"></textarea>
+                    </div>
+                </fieldset>
+
+                <!-- AUTHORIZATION -->
+                <fieldset>
+                    <legend>Authorization</legend>
+                    <div class="certify">
+                        <input type="checkbox" id="certify" name="Authorization Agreed" value="Yes, I certify and authorize" required>
+                        <label for="certify">
+                            I certify that the information provided in this application is true and complete to the best of my
+                            knowledge. I authorize the landlord / property manager to verify the information provided — including
+                            but not limited to employment, income, and rental history — and to obtain a consumer credit report
+                            and criminal background check for the purpose of evaluating this application. I understand that
+                            providing false information may result in denial of this application or termination of any resulting
+                            lease agreement. <span class="req">*</span>
+                        </label>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="signature">Electronic Signature (type your full legal name) <span class="req">*</span></label>
+                            <input type="text" id="signature" name="Electronic Signature" autocomplete="off" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sign_date">Date <span class="req">*</span></label>
+                            <input type="text" id="sign_date" name="Signature Date" readonly required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <button type="submit" id="submit-btn" class="btn">Submit Application &amp; Pay $50 Fee</button>
+                <p class="submit-note">
+                    By clicking Submit, your application is sent to Booth Company Real Estate and you will be redirected to a
+                    secure Stripe page to pay the $50 non-refundable application fee.
+                </p>
+                <p id="form-status"></p>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-inner">
+            <img src="images/BCRE Cover 4.png" alt="Booth Company Real Estate" class="footer-logo">
+            <div class="footer-details">
+                <p>106 W North Main Street, Richmond, MO 64085</p>
+                <p><a href="mailto:abooth.mailbox@gmail.com">abooth.mailbox@gmail.com</a> &nbsp;·&nbsp; <a href="tel:8163192693">(816) 319-2693</a></p>
+                <p class="footer-copy">© 2025 Booth Company Real Estate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        // ─────────────────────────────────────────────────────────────
+        //  STRIPE PAYMENT LINK  —  REPLACE THIS with your own $50 link.
+        //  Create it in Stripe: Dashboard → Payment Links → New →
+        //  product "Rental Application Fee", price $50 one-time → Create.
+        //  Then paste the "https://buy.stripe.com/..." URL below.
+        // ─────────────────────────────────────────────────────────────
+        var STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/REPLACE_WITH_YOUR_50_DOLLAR_LINK';
+
+        var form   = document.getElementById('lease-form');
+        var btn    = document.getElementById('submit-btn');
+        var status = document.getElementById('form-status');
+
+        // Stamp today's date into the read-only signature date field.
+        var today = new Date();
+        document.getElementById('sign_date').value =
+            (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Native required-field validation first.
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            btn.disabled = true;
+            status.className = 'working';
+            status.textContent = 'Submitting your application…';
+
+            var body = new URLSearchParams(new FormData(form)).toString();
+
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: body
+            })
+            .then(function (res) {
+                if (!res.ok) throw new Error('Submission failed (' + res.status + ')');
+
+                if (STRIPE_PAYMENT_LINK.indexOf('REPLACE_WITH_YOUR') !== -1) {
+                    // Payment link not configured yet — don't send them to a broken URL.
+                    status.className = '';
+                    status.textContent = 'Application received. (Payment step is not configured yet — ' +
+                                         'add your Stripe Payment Link to enable the $50 payment.)';
+                    return;
+                }
+
+                status.className = 'working';
+                status.textContent = 'Application received — redirecting to secure payment…';
+                window.location.href = STRIPE_PAYMENT_LINK;
+            })
+            .catch(function (err) {
+                btn.disabled = false;
+                status.className = 'error';
+                status.textContent = 'Sorry, something went wrong sending your application. ' +
+                                     'Please try again, or call us at (816) 319-2693. (' + err.message + ')';
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
