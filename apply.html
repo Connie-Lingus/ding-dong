@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Residential rental application for Booth Company Real Estate. Apply to rent a property — $50 application fee.">
+    <meta name="description" content="Residential rental application for Booth Company Real Estate. Apply to rent a property — $52 application fee.">
     <meta name="robots" content="noindex">
     <title>Rental Application — Booth Company Real Estate</title>
     <link rel="stylesheet" href="styles.css">
@@ -162,9 +162,10 @@
             </div>
 
             <div class="fee-banner">
-                <span class="fee-amount">$50</span>
+                <span class="fee-amount">$52</span>
                 <span class="fee-text">
-                    A <strong>$50.00 application fee</strong> is due upon submission, paid securely by card. This fee is
+                    A <strong>$52.00 application fee</strong> is due upon submission, paid securely by card. This is a
+                    <strong>$50 application fee plus a $2 card-processing charge</strong>. The fee is
                     <strong>non-refundable</strong>. Submission of this application is not a guarantee of acceptance.
                 </span>
             </div>
@@ -555,10 +556,11 @@
                     </div>
                 </fieldset>
 
-                <button type="submit" id="submit-btn" class="btn">Submit Application &amp; Pay $50 Fee</button>
+                <button type="submit" id="submit-btn" class="btn">Submit Application &amp; Pay $52 Fee</button>
                 <p class="submit-note">
                     By clicking Submit, your application is sent to Booth Company Real Estate and you will be redirected to a
-                    secure Stripe page to pay the $50 non-refundable application fee.
+                    secure Stripe page to pay the <strong>$52.00</strong> non-refundable application fee — a $50 application
+                    fee plus a $2 card-processing charge.
                 </p>
                 <p id="form-status"></p>
             </form>
@@ -579,9 +581,9 @@
     <script>
     (function () {
         // ─────────────────────────────────────────────────────────────
-        //  STRIPE PAYMENT LINK  —  REPLACE THIS with your own $50 link.
+        //  STRIPE PAYMENT LINK  —  REPLACE THIS with your own $52 link.
         //  Create it in Stripe: Dashboard → Payment Links → New →
-        //  product "Rental Application Fee", price $50 one-time → Create.
+        //  product "Rental Application Fee", price $52.00 one-time → Create.
         //  Then paste the "https://buy.stripe.com/..." URL below.
         // ─────────────────────────────────────────────────────────────
         var STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/REPLACE_WITH_YOUR_50_DOLLAR_LINK';
@@ -622,7 +624,7 @@
                     // Payment link not configured yet — don't send them to a broken URL.
                     status.className = '';
                     status.textContent = 'Application received. (Payment step is not configured yet — ' +
-                                         'add your Stripe Payment Link to enable the $50 payment.)';
+                                         'add your Stripe Payment Link to enable the $52 payment.)';
                     return;
                 }
 
