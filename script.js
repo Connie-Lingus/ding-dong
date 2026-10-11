@@ -17,9 +17,11 @@ document.getElementById('contact-form').addEventListener('submit', function(even
 
 (function () {
     // ── CONFIG ──────────────────────────────────────────────
-    // After you deploy the Netlify function, paste its URL here.
-    // It will look like: https://your-site.netlify.app/.netlify/functions/reviews
-    const PROXY_URL = 'https://preeminent-fudge-f8454a.netlify.app/.netlify/functions/reviews';
+    // Reviews are served from a static file on this site (reviews.json).
+    // The old Netlify/Places API proxy stopped working (Google requires a
+    // billing account for the Places API). Refresh reviews.json by hand when
+    // new reviews come in.
+    const PROXY_URL = 'reviews.json';
     // ────────────────────────────────────────────────────────
 
     const grid = document.getElementById('reviews-grid');
